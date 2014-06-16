@@ -27,11 +27,22 @@ public class StarTest {
 		Star test = new Star();
 		test.setBV(10.867);
 		test.setTemp();
-		System.out.println(test.getTemp());
+		//System.out.println(test.getTemp());
 		assertTrue(test.getTemp() <= 10.00000000001 && test.getTemp()>= 0.9999999999);
 		
 		
 		//fail("ssg");
+		
+	}
+	
+	@Test
+	//test of set abMag()
+	public void testsetAbMag(){
+		Star test = new Star();
+		test.setParallax(0.1);
+		test.setAbsMag();
+		System.out.println(test.getAbMag());
+		assertTrue(test.getAbMag() <= -69.0 && test.getAbMag() >= -69.1);
 		
 	}
 

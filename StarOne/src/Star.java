@@ -18,6 +18,8 @@ public class Star {
 	private double cartX;
 	private double cartY;
 	private double colourIndex;
+	private double parallax;
+
 	
 	public Star(){
 		
@@ -37,6 +39,8 @@ public class Star {
 		
 	}
 	
+	//hipp data constructor
+	
 	public String getName(){return name;}
 	public double getDistance(){return distance;}
 	public double getApMag(){return apMag;}
@@ -50,15 +54,32 @@ public class Star {
 	public double getcolourIndex(){return colourIndex;}
 	
 	
-	public void setBV(double bv){
-		
-		colourIndex = bv;
-	}
+	public void setBV(double bv){colourIndex = bv;	}
+	public void setParallax(double p){parallax = p;}
+	
+	//method to set the star temperature using colourIndex and formula log(T) = (14.551 - colourIndex)/3.684
 	public void setTemp(){
 		
 		double logTemp = (14.551 - colourIndex)/3.684;
 		System.out.println(logTemp);
 		temp = Math.pow(10, logTemp);
+		
+	}
+	
+	//method to calculate and set star distance using parallax (d = 1/p, p in arcseconds)
+	public void setDistance(){
+		
+		double paraAS = parallax/1000;
+		distance = 1/(paraAS);
+		
+	}
+	
+	//method to set absolute magnitude
+	public void setAbsMag(){
+		
+		double paraAS = parallax/1000;
+		double x = paraAS/100;
+		abMag =  5*(Math.log(x));
 		
 	}
 	

@@ -4,15 +4,21 @@ public class Main {
 	public static void main(String[] args){
 		
 		
-		HippDataIn test = new HippDataIn();
-		test.readInFile();
+		//HippDataIn test = new HippDataIn();
+	//	test.readInFile();
 		//test.outFile();
 		
 		//DataTest test = new DataTest();
 		//test.readInFile();
 		
-		//StarGUI testGUI = new StarGUI();
-		//testGUI.setVisible(true);
+		StarGUI testGUI = new StarGUI();
+		testGUI.setVisible(true);
+		
+		//CreateStars test1 = new CreateStars();
+		//test1.createHippStars();
+		
+		
+		
 	}
 
 }

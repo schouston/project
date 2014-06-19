@@ -22,15 +22,13 @@ public class StarTest {
 	}
 	
 	@Test
-	//test to chech method setTemp() which calculates stellar temperature from bv colour index
+	//test to check method setTemp() which calculates stellar temperature from bv colour index
 	public void testsetTemp(){
 		Star test = new Star();
 		test.setBV(10.867);
 		test.setTemp();
 		//System.out.println(test.getTemp());
-		assertTrue(test.getTemp() <= 10.00000000001 && test.getTemp()>= 0.9999999999);
-		
-		
+		assertTrue(test.getTemp() <= 10.00000000001 && test.getTemp()>= 0.9999999999);		
 		//fail("ssg");
 		
 	}
@@ -46,4 +44,16 @@ public class StarTest {
 		
 	}
 
+	@Test
+	//
+	public void testCreateHippStarObject(){
+		
+		Star test = new Star("1", 10, 0.1, 0.1, 0.01, 8, "O");
+		test.setAbsMag();
+		test.setDistance();
+		test.setTemp();
+		assertTrue(test.getID().equals("1"));
+		assertTrue(test.getApMag() == 10);
+		
+	}
 }

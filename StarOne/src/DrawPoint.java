@@ -8,7 +8,7 @@ public class DrawPoint extends JComponent{
 	public void paintComponent(Graphics g){
 		
 		Graphics2D g2 = (Graphics2D) g;
-		Ellipse2D.Double point = new Ellipse2D.Double(200, 200, 20, 20);
+		Ellipse2D.Double point = new Ellipse2D.Double(200, 200, 5, 5);
 		g2.setColor(Color.yellow);
 		g2.fill(point);
 

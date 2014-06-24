@@ -18,7 +18,7 @@ public class Star {
 	private double cartX;
 	private double cartY;
 	private double colourIndex;
-	private double parallax;
+	private double parallax; //mas
 
 	
 	public Star(){
@@ -29,22 +29,30 @@ public class Star {
 		name = n;
 	}
 	
-	public Star(String id, double r, double d, double m, double dis){
+	//Hipparcos data in constructor
+	public Star(String id, double vm, double r, double d, double p, double ci, String st){
 		
 		idNum = id;
-		distance = dis;
+		//distance = dis;
+		apMag = vm;
 		ra = r;
 		dec = d;
-		apMag = m;
+		parallax = p;
+		colourIndex = ci;
+		stellarClass = st;
+		
 		
 	}
 	
 	//hipp data constructor
 	
 	public String getName(){return name;}
+	public String getID(){return idNum;}
 	public double getDistance(){return distance;}
 	public double getApMag(){return apMag;}
 	public double getAbMag(){return abMag;}
+	public double getRA(){return ra;}
+	public double getDec(){return dec;}
 	public double getMass(){return mass;}
 	public String getStellarClass(){return stellarClass;}
 	public double getTemp(){return temp;}
@@ -52,6 +60,8 @@ public class Star {
 	public double getCartX(){return cartX;}
 	public double getCartY(){return cartY;}
 	public double getcolourIndex(){return colourIndex;}
+	
+	public void setName(){name = "DEFAULT!";}
 	
 	
 	public void setBV(double bv){colourIndex = bv;	}
@@ -80,7 +90,25 @@ public class Star {
 		double paraAS = parallax/1000;
 		double x = paraAS/100;
 		abMag =  5*(Math.log(x));
+	}
+	
+	//calculate cartisian co-ords for HA Equal Area Projection
+	public void calcXCoord(){
 		
+		double operand1 = 2 * Math.sqrt(2) * Math.cos(dec)* Math.sin(ra/2);
+		double operand2 = Math.sqrt(1 + (Math.cos(dec) * Math.cos(ra/2)));
+		double x = operand1/operand2;
+		
+		cartX = x;		
+	}
+	
+	public void calcYCoord(){
+		
+		double operand1 = Math.sqrt(2* Math.sin(dec));
+		double operand2 = Math.sqrt(1 + (Math.cos(dec) * Math.cos(ra/2)));
+		double y = operand1/operand2;
+		
+		cartY = y;
 	}
 	
 	

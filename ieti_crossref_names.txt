@@ -1,0 +1,27 @@
+1 | Sun | 0 | | 0 | 0 | 0 | Origin | Sol
+2 | Proxima | 551 | C?| 0 | 70890 | 49 | a Cen C? | Zkh 211
+3 | a Centauri A | 559 | A | 128620 | 71681 | 50 | Rigel Kentaurus A | HR 5459; Toliman
+4 | a Centauri B | 559 | B | 128621 | 71683 | 51 | Rigel Kentaurus B | HR 5460
+5 | Barnard's | 699 | | 0 | 87937 | 57 | | Zkh 269
+6 | Wolf 359 | 406 | | 0 | 0 | 36 | CN Leo | Zkh 147
+7 | Lalande 21185 | 411 | | 95735 | 54035 | 37 | | SAO 62377
+8 | BL Ceti | 65 | A | 0 | 0 | 9 | BL Ceti | L726-8A
+9 | UV Ceti | 65 | B | 0 | 0 | 10 | UV Ceti | L726-8B
+1 0 | Sirius A | 244 | A | 48915 | 32349 | 219 | a CMa A | HR 2491
+1 1 | Sirius B | 244 | B | 48915 | 32349 | 0 | a CMa B | WD 0642-16
+1 2 | Ross 154 | 729 | | 0 | 92403 | 3414 | V1216 Sgr | Zkh 282
+1 3 | Ross 248 | 905 | | 0 | 0 | 549 | HH And | Zkh 353
+1 4 | e Eridani | 144 | | 22049 | 16537 | 1557 | 18 Eri | HR 1084
+1 5 | Lacaille 9352 | 887 | | 217987 | 114046 | 70 | | SAO 214301
+1 6 | Ross 128 | 447 | | 0 | 57548 | 315 | FI Vir | Zkh 169
+1 7 | Luyten 789-6A | 866 | A | 0 | 0 | 68 | EZ Aqr | Zkh 333
+1 8 | Luyten 789-6C | 866 | C | 0 | 0 | 68 | | G 156-31C
+1 9 | Luyten 789-6B | 866 | B | 0 | 0 | 0 | | G 156-31B
+2 0 | Procyon A | 280 | A | 61421 | 37279 | 233 | a CMi A | HR 2943
+2 1 | Procyon B | 280 | B | 61421 | 37279 | 0 | a CMi B | WD 0763+53
+2 2 | 61 Cygni A | 820 | A | 201091 | 104214 | 62 | V1803 Cyg | HR 8086
+2 3 | 61 Cygni B | 820 | B | 201092 | 104217 | 63 | 61CygB | HR 8086
+2 4 | Struve 2398A | 725 | A | 173739 | 91768 | 58 | | SAO 31128
+2 5 | Struve 2398B | 725 | B | 173740 | 91772 | 59 | | SAO 31129
+2 6 | Struve 2398C | 725 | C | 0 | 0 | 0 | | CCDM J18428+5937C
+2 7 | Groombridge 34A | 15 | A | 1326 | 1475 | 3 | GX And | SAO 36248

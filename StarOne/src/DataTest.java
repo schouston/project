@@ -22,8 +22,8 @@ public class DataTest {
 				double ra = Double.parseDouble(tokens[4]);
 				double dec = Double.parseDouble(tokens[5]);
 				double dis = Double.parseDouble(tokens[6]);
-				Star test = new Star(id, ra, dec, mag, dis);
-				System.out.println(test.getDistance());
+				//Star test = new Star(id, ra, dec, mag, dis);
+				//System.out.println(test.getDistance());
 			}
 		}
 		

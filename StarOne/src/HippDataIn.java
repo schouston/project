@@ -6,7 +6,7 @@ public class HippDataIn {
 
 	private final String IN_FILE = "hipp.txt";
 	private final double MIN_PARALLAX = 9;
-	private String id;
+	private int id;
 	private double mag;
 	private double ra;
 	private double dec;
@@ -23,18 +23,17 @@ public class HippDataIn {
 		try{
 			FileReader reader = new FileReader(IN_FILE);
 
-			FileWriter out = new FileWriter("processed_data.text");
+			FileWriter out = new FileWriter("processed_data.txt");
+			Scanner  in = new Scanner(reader);
 
-
-			try{
-				Scanner  in = new Scanner(reader);
+			try{				
 				while (in.hasNextLine()){
 					String line = in.nextLine();
 					String [] tokens = line.split("[|]+");
-					System.out.println(tokens[11]);
+					System.out.println(tokens[76]);
 
 					if (Double.parseDouble(tokens[11]) > MIN_PARALLAX){
-						id = tokens[1];
+						id = Integer.parseInt(tokens[1].trim());
 						mag = Double.parseDouble(tokens[5]);
 						ra = Double.parseDouble(tokens[8]);
 						dec = Double.parseDouble(tokens[9]);
@@ -46,13 +45,16 @@ public class HippDataIn {
 						//System.out.println("hi" + dec);
 
 						//FileWriter out = new FileWriter("processed_data.text");
-						out.write(id + ", " + mag + ", " + ra + ", " + dec + ", " + par + ", " + colourInd + ", " + specType + ", " + "\n");
+
+						String output = String.format("%s, %f, %f, %f, %f, %f, %s", id, mag, ra, dec, par, colourInd, specType);
+						out.write(output + '\n');
+						//out.write(id + ", " + mag + ", " + ra + ", " + dec + ", " + par + ", " + colourInd + ", " + specType + ", " + "\n");
 					}
 				}
 			}
 			finally{
-				if((out)!= null)
-					out.close();
+				if((in)!=null)in.close();
+				if((out)!= null)out.close();
 			}
 		}
 		catch (IOException e){
@@ -61,14 +63,40 @@ public class HippDataIn {
 
 	}
 
+	public void createHippStars(){
+		try{
+
+			FileReader reader = new FileReader("processed_data.txt");
+			Scanner  in = new Scanner(reader);
+			try{
+				while (in.hasNextLine()){
+					String line = in.nextLine();
+					String [] tokens = line.split("[ ,]+");
+					id = Integer.parseInt(tokens[0]);
+					mag = Double.parseDouble(tokens[1]);
+					ra = Double.parseDouble(tokens[2]);
+					dec = Double.parseDouble(tokens[3]);
+					par = Double.parseDouble(tokens[4]);
+					colourInd = Double.parseDouble(tokens[5]);
+					specType = tokens[6];
+			}
+			}
+
+			finally{
+				if((in)!=null)in.close();
+			}
+		}
+		catch (IOException e){
+			System.out.println("exception");
+		}
+	}
+
 	public void outFile(){
 
 		try{
 
-			FileWriter out = new FileWriter("processed_data.text");
+			FileWriter out = new FileWriter("processed_data.txt");
 			out.write(id + ", " + mag + ", " + ra + ", " + dec + ", " + par + ", " + colourInd + ", " + specType + ", " );
-
-
 		}
 
 		catch(IOException e){

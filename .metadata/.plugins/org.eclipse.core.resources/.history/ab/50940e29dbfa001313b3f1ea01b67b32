@@ -1,0 +1,25 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.geom.Ellipse2D;
+//import java.awt.Graphics;
+
+public class DrawPoint extends JComponent{
+	
+	private StarManager manager;
+	
+	public void paintComponent(Graphics g){
+		
+		Graphics2D g2 = (Graphics2D) g;
+		Ellipse2D.Double point = new Ellipse2D.Double(800, 0, 5, 5);
+		g2.setColor(Color.yellow);
+		g2.fill(point);
+		
+		Ellipse2D.Double point2 = new Ellipse2D.Double(400, 0, 5, 5);
+		g2.setColor(Color.cyan);
+		g2.fill(point2);
+
+		//g.fillOval(0, 0, 200, 200);
+		//g.setColor(Color.yellow);
+	}
+
+}

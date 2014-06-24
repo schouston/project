@@ -1,24 +1,27 @@
 
 public class Star {
 	
-	private final double TEMP_CONSTANTA = 14.551;
+	private final double TEMP_CONSTANTA = 14.551;			//constant used in setTemperature method
+	private static int iDCounter;							//static variable counter for unique id
 	
-	private String name;
-	private String idNum;
-	private double distance;
-	private double apMag;
-	private double abMag;
-	private double mass;
-	private String stellarClass;
-	private double temp;
-	private boolean inSystem;
-	private boolean exoSystem;
-	private double ra;
-	private double dec;
-	private double cartX;
-	private double cartY;
-	private double colourIndex;
-	private double parallax; //mas
+	private int starViewID;									//unique starview id
+	
+	private String name;									//
+	private String idNum;									//hipparcos id
+	private double distance;								//distance from sun in pc
+	private double apMag;									//apparent (V-band) magnitude
+	private double abMag;									//absolute magnitude
+	private double mass;									//stellar mass (solar-radi)
+	private String stellarClass;							//stellar classification - used for colour
+	private double temp;									//stellar temp (K)
+	private boolean inSystem;								//boolean indicating presence in star system
+	private boolean exoSystem;								//boolean indicating presence of exo-planet system
+	private double ra;										//right ascension
+	private double dec;										//declination
+	private double cartX;									//cartesian x co-ordinate
+	private double cartY;									//y co-ordinate
+	private double colourIndex;								//b-v colour index to calculate temperature
+	private double parallax; 								//milli arc seconds
 
 	
 	public Star(){
@@ -27,25 +30,25 @@ public class Star {
 	public Star(String n){
 		
 		name = n;
+		starViewID = iDCounter;
+		iDCounter ++;
 	}
 	
 	//Hipparcos data in constructor
 	public Star(String id, double vm, double r, double d, double p, double ci, String st){
 		
+		starViewID = iDCounter;
+		iDCounter ++;
 		idNum = id;
-		//distance = dis;
 		apMag = vm;
 		ra = r;
 		dec = d;
 		parallax = p;
 		colourIndex = ci;
-		stellarClass = st;
-		
-		
+		stellarClass = st;		
 	}
 	
-	//hipp data constructor
-	
+	public int getSVid(){return starViewID;}
 	public String getName(){return name;}
 	public String getID(){return idNum;}
 	public double getDistance(){return distance;}
@@ -61,9 +64,7 @@ public class Star {
 	public double getCartY(){return cartY;}
 	public double getcolourIndex(){return colourIndex;}
 	
-	public void setName(){name = "DEFAULT!";}
-	
-	
+	public void setName(){name = "DEFAULT!";}	
 	public void setBV(double bv){colourIndex = bv;	}
 	public void setParallax(double p){parallax = p;}
 	
@@ -92,12 +93,12 @@ public class Star {
 		abMag =  5*(Math.log(x));
 	}
 	
-	//calculate cartisian co-ords for HA Equal Area Projection
+	//calculate cartesian co-ords for HA Equal Area Projection
 	public void calcXCoord(){
 		
 		double operand1 = 2 * Math.sqrt(2) * Math.cos(dec)* Math.sin(ra/2);
 		double operand2 = Math.sqrt(1 + (Math.cos(dec) * Math.cos(ra/2)));
-		double x = operand1/operand2;
+		double x = (operand1/operand2)*100;
 		
 		cartX = x;		
 	}
@@ -106,10 +107,12 @@ public class Star {
 		
 		double operand1 = Math.sqrt(2* Math.sin(dec));
 		double operand2 = Math.sqrt(1 + (Math.cos(dec) * Math.cos(ra/2)));
-		double y = operand1/operand2;
+		double y = (operand1/operand2)*10;
 		
 		cartY = y;
 	}
+	
+	
 	
 	
 

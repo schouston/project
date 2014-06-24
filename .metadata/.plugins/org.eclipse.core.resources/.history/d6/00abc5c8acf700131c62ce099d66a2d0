@@ -1,0 +1,43 @@
+
+public class StarManager {
+
+	//class to hold array of Star Objects
+
+	private final int SIZE = 6;  //array size
+	private Star[] starArray;	//array of star objects
+	private int starArrayCounter;	//counter for number of star objects entered
+
+	public StarManager(){
+
+		starArray = new Star[SIZE];
+
+	}
+
+	public void addStar(Star s){
+
+		Star star = s;
+		starArray[starArrayCounter] = star;
+		starArrayCounter ++;
+	}
+
+	public void printStarData(int i){
+
+		int index = i;
+		Star star = starArray[i];
+
+		String name = "Name: ";
+		String id = "ID: ";
+		String apmag = "Apparent Magnitude: ";
+		String abmad = "Absolute Magnitude: ";
+		String r = "Right Ascension: ";
+		String d = "Declination: ";
+		String temp = "Stellar Temperature: ";
+		String type = "Spectral Type: ";
+
+		String starData = String.format("%s %s '/n' %s %s '/n'",name, star.getName());
+		System.out.println(starData);	
+	}
+
+
+
+}

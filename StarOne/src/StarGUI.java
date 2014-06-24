@@ -34,6 +34,7 @@ public class StarGUI extends JFrame {
 		stars = new CreateStars();
 		stars.createHippStars();
 		manager = stars.getManager();
+		
 	}
 	
 	public void layoutWest(){
@@ -42,7 +43,7 @@ public class StarGUI extends JFrame {
 		dataDisplay = new JTextArea();
 		dataDisplay.setBackground(Color.gray);
 		//dataDisplay.setLayout();
-		dataDisplay.append(manager.printStarData(0));
+		dataDisplay.append(manager.printStarData(2));
 		west.add(dataDisplay);
 		this.add(west, BorderLayout.WEST);
 	}
@@ -51,7 +52,7 @@ public class StarGUI extends JFrame {
 		centre = new JPanel();
 		centre.setLayout(new BorderLayout());
 		centre.setBackground(Color.black);
-		DrawPoint point = new DrawPoint();
+		DrawPoint point = new DrawPoint(manager);
 		centre.add(point, BorderLayout.CENTER);
 		this.add(centre, BorderLayout.CENTER);
 	}

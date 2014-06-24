@@ -1,0 +1,41 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.geom.Ellipse2D;
+//import java.awt.Graphics;
+
+public class DrawPoint extends JComponent{
+	
+	private StarManager manager;
+	
+	public DrawPoint(StarManager m){
+		
+		manager = m;
+	}
+	
+	public void paintComponent(Graphics g){
+		
+		String colour = "yellow";
+		
+		Star[] drawArray = new Star[6]; 
+		drawArray = manager.getStarArray();
+		
+		for (Star star : drawArray){
+		
+		Graphics2D g2 = (Graphics2D) g;
+		Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX(), star.getCartY(), 5, 5);
+		System.out.println("x " + star.getCartX());
+		System.out.println("y " + star.getCartY());
+		
+		if(star.getStellarClass().equals("K5")){g2.setColor(Color.yellow);}
+		else if (star.getStellarClass().equals("G0")){g2.setColor(Color.cyan);}
+		g2.fill(point);
+		
+		}
+		
+		
+
+		//g.fillOval(0, 0, 200, 200);
+		//g.setColor(Color.yellow);
+	}
+
+}

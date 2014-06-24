@@ -1,0 +1,69 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JComponent;
+
+
+public class StarGUI extends JFrame {
+	
+	private JPanel west, centre, south;
+	private JTextArea dataDisplay;
+	private JTextField searchbox;
+	
+	private StarManager manager;
+	private CreateStars stars;
+	
+	final int FRAME_WIDTH = 400;
+	final int FRAME_HEIGHT = 400;
+	
+	
+	public StarGUI(){
+		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Star Test GUI");
+		setSize(800, 900);
+		inputStars();
+		layoutWest();
+		layoutCentre();
+		layoutSouth();
+		//DrawPoint point = new DrawPoint();
+		//this.add(point);		
+	}
+	
+	public void inputStars(){
+		stars = new CreateStars();
+		stars.createHippStars();
+		manager = stars.getManager();
+		
+	}
+	
+	public void layoutWest(){
+		west = new JPanel();
+		west.setBackground(Color.blue);
+		dataDisplay = new JTextArea();
+		dataDisplay.setBackground(Color.gray);
+		//dataDisplay.setLayout();
+		dataDisplay.append(manager.printStarData(2));
+		west.add(dataDisplay);
+		this.add(west, BorderLayout.WEST);
+	}
+	
+	public void layoutCentre(){
+		centre = new JPanel();
+		centre.setLayout(new BorderLayout());
+		centre.setBackground(Color.black);
+	
+		DrawPoint point = new DrawPoint();
+		centre.add(point, BorderLayout.CENTER);
+		this.add(centre, BorderLayout.CENTER);
+	}
+	
+	public void layoutSouth(){
+		south = new JPanel();
+		south.setBackground(Color.white);
+		searchbox = new JTextField();
+		south.add(searchbox);
+		this.add(south, BorderLayout.SOUTH);
+	}
+	
+}

@@ -1,0 +1,13 @@
+{
+  "C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\rt.jar": {
+    "coordinate": "jre:jre:zip:call:1.0.0",
+    "location": "C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\rt.jar",
+    "status": "RESOLVED",
+    "error": "No class path info available for \u0027C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\rt.jar\u0027. Skipped."
+  },
+  "H:\\Project_Folder\\project\\StarOne\\src": {
+    "location": "H:\\Project_Folder\\project\\StarOne\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027H:\\Project_Folder\\project\\StarOne\\src\u0027. Skipped."
+  }
+}

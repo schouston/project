@@ -1,16 +1,45 @@
 import java.awt.*;
+import javax.swing.*;
 import java.awt.geom.Ellipse2D;
 //import java.awt.Graphics;
-import javax.swing.JComponent;
 
 public class DrawPoint extends JComponent{
 	
+	private StarManager manager;
+	
+	public DrawPoint(StarManager m){
+		
+		manager = m;
+	}
+	
 	public void paintComponent(Graphics g){
 		
+		String colour = "yellow";
+		
+		Star[] drawArray = new Star[98]; 
+		drawArray = manager.getStarArray();
+		
+		for (Star star : drawArray){
+		
 		Graphics2D g2 = (Graphics2D) g;
-		Ellipse2D.Double point = new Ellipse2D.Double(200, 200, 5, 5);
-		g2.setColor(Color.yellow);
+		Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX(), star.getCartY(), 5, 5);
+		System.out.println("x " + star.getCartX());
+		System.out.println("y " + star.getCartY());
+		
+		if(star.getStellarClass().substring(0, 1).equals("O")) g2.setColor(Color.blue);
+		else if (star.getStellarClass().substring(0, 1).equals("B"))g2.setColor(Color.lightGray);
+		else if (star.getStellarClass().substring(0, 1).equals("A"))g2.setColor(Color.white);
+		else if (star.getStellarClass().substring(0, 1).equals("F"))g2.setColor(Color.pink);
+		else if (star.getStellarClass().substring(0, 1).equals("G"))g2.setColor(Color.yellow);
+		else if (star.getStellarClass().substring(0, 1).equals("K"))g2.setColor(Color.orange);
+		else if (star.getStellarClass().substring(0, 1).equals("M"))g2.setColor(Color.red);
+		else if (star.getStellarClass().substring(0, 1).equals("L"))g2.setColor(Color.magenta);
+		else g2.setColor(Color.yellow);
 		g2.fill(point);
+		
+		}
+		
+		
 
 		//g.fillOval(0, 0, 200, 200);
 		//g.setColor(Color.yellow);

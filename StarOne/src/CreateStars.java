@@ -42,6 +42,8 @@ public class CreateStars {
 					newStar.setAbsMag();
 					newStar.setDistance();
 					newStar.setTemp();
+					newStar.calcXCoord();
+					newStar.calcYCoord();
 					manager.addStar(newStar);
 					counter ++;
 			}
@@ -54,9 +56,10 @@ public class CreateStars {
 		catch (IOException e){
 			System.out.println("exception");
 		}
-		manager.printStarData(0);
+		//manager.printStarData(2);
 	}
 	
+	//returns array of star objects
 	public StarManager getManager(){
 		return manager;
 	}

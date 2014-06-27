@@ -39,7 +39,7 @@ public class StarTest {
 		Star test = new Star();
 		test.setParallax(0.1);
 		test.setAbsMag();
-		System.out.println(test.getAbMag());
+		//System.out.println(test.getAbMag());
 		assertTrue(test.getAbMag() <= -69.0 && test.getAbMag() >= -69.1);
 		
 	}

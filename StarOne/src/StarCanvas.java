@@ -36,14 +36,14 @@ public class StarCanvas extends Canvas{
 		gs2.setColor(Color.yellow);
 		gs2.fill(sun);
 
-		AffineTransform tform = AffineTransform.getTranslateInstance(width/2, height);
+		//AffineTransform tform = AffineTransform.getTranslateInstance(width/2, height);
 		Star[] drawArray = new Star[98]; 
 		drawArray = manager.getStarArray();
 
 		for (Star star : drawArray){
 
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setTransform(tform);
+			//g2.setTransform(tform);
 			Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX(), star.getCartY(), 5, 5);
 			if(star.getStellarClass().substring(0, 1).equals("O")) g2.setColor(Color.blue);
 			else if (star.getStellarClass().substring(0, 1).equals("B"))g2.setColor(Color.lightGray);

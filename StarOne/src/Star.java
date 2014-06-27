@@ -18,8 +18,8 @@ public class Star {
 	private boolean exoSystem;								//boolean indicating presence of exo-planet system
 	private double ra;										//right ascension
 	private double dec;										//declination
-	private double cartX;									//cartesian x co-ordinate
-	private double cartY;									//y co-ordinate
+	private int cartX;									//cartesian x co-ordinate
+	private int cartY;									//y co-ordinate
 	private double colourIndex;								//b-v colour index to calculate temperature
 	private double parallax; 								//milli arc seconds
 
@@ -60,8 +60,8 @@ public class Star {
 	public String getStellarClass(){return stellarClass;}
 	public double getTemp(){return temp;}
 	public boolean inSystem(){return inSystem;}
-	public double getCartX(){return cartX;}
-	public double getCartY(){return cartY;}
+	public int getCartX(){return cartX;}
+	public int getCartY(){return cartY;}
 	public double getcolourIndex(){return colourIndex;}
 	
 	public void setName(){name = "DEFAULT!";}	
@@ -98,18 +98,18 @@ public class Star {
 		
 		double operand1 = 2 * Math.sqrt(2) * Math.cos(dec)* Math.sin(ra/2);
 		double operand2 = Math.sqrt(1 + (Math.cos(dec) * Math.cos(ra/2)));
-		double x = (operand1/operand2)*100;
+		double x = (operand1/operand2)*1000;
 		
-		cartX = x;		
+		cartX = (int)(x);		
 	}
 	
 	public void calcYCoord(){
 		
 		double operand1 = Math.sqrt(2* Math.sin(dec));
 		double operand2 = Math.sqrt(1 + (Math.cos(dec) * Math.cos(ra/2)));
-		double y = (operand1/operand2)*10;
+		double y = (operand1/operand2)*100;
 		
-		cartY = y;
+		cartY = (int)(y);
 	}
 	
 	

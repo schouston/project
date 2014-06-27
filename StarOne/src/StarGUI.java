@@ -19,8 +19,8 @@ public class StarGUI extends JFrame {
 	private CreateStars stars;
 	private StarController controller;
 	
-	final int FRAME_WIDTH = 1100;
-	final int FRAME_HEIGHT = 900;
+	final int FRAME_WIDTH = 1400;
+	final int FRAME_HEIGHT = 1000;
 	
 	
 	public StarGUI(){
@@ -57,7 +57,7 @@ public class StarGUI extends JFrame {
 	
 	public void layoutCentre(){
 		
-		controller = new StarController();
+		controller = new StarController(manager, this);
 		canvas = new StarCanvas(manager);
 		canvas.setBackground(Color.black);
 		canvas.addMouseListener(controller);
@@ -105,6 +105,13 @@ public class StarGUI extends JFrame {
 		
 		
 		this.add(south, BorderLayout.SOUTH);
+	}
+	
+	public void updateDataDisplay(int index){
+		
+		dataDisplay.setText("");		
+		dataDisplay.append(manager.printStarData(index));
+		
 	}
 	
 }

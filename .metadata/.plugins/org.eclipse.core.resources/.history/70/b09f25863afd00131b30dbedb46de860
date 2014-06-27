@@ -1,0 +1,44 @@
+import java.awt.event.*;
+
+public class StarController implements MouseListener{
+	
+	private StarManager manager;
+	
+	public StarController(StarManager m){
+	
+		
+		manager = m;
+	}
+	
+	public void mousePressed(MouseEvent e){
+		
+	}
+	
+	public void mouseClicked(MouseEvent e){
+		
+		Star [] stars = manager.getStarArray();
+		
+		for (int i = 0; i < stars.length; i++){		
+		if (e.getX() == stars[i].getCartX() && e.getY() == stars[i].getCartY()){
+			System.out.println("hit");
+		}
+			
+		}
+		System.out.println(stars[0].getCartX());
+		System.out.println(e.getX());
+		System.out.println("press");
+		
+	}
+	
+	public void mouseEntered(MouseEvent e){
+		
+	}
+
+	public void mouseReleased(MouseEvent e){
+		
+	}
+	
+	public void mouseExited(MouseEvent e){
+		
+	}
+}

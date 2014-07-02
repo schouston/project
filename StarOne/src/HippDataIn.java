@@ -4,7 +4,8 @@ import java.util.*;
 
 public class HippDataIn {
 
-	private final String IN_FILE = "hipp.txt";
+	private final String IN_FILE = "hipp_181_closest.txt";//"hipp.txt";
+	private final String OUT_FILE = "processed_181closest_data.txt";
 	private final double MIN_PARALLAX = 9;
 	private int id;
 	private double mag;
@@ -23,7 +24,7 @@ public class HippDataIn {
 		try{
 			FileReader reader = new FileReader(IN_FILE);
 
-			FileWriter out = new FileWriter("processed_data.txt");
+			FileWriter out = new FileWriter(OUT_FILE);
 			Scanner  in = new Scanner(reader);
 
 			try{				

@@ -2,7 +2,7 @@
 public class Star {
 	
 	private final double TEMP_CONSTANTA = 14.551;			//constant used in setTemperature method
-	private static int iDCounter;							//static variable counter for unique id
+	//private static int iDCounter = 0;							//static variable counter for unique id
 	
 	private int starViewID;									//unique starview id
 	
@@ -18,8 +18,8 @@ public class Star {
 	private boolean exoSystem;								//boolean indicating presence of exo-planet system
 	private double ra;										//right ascension
 	private double dec;										//declination
-	private int cartX;									//cartesian x co-ordinate
-	private int cartY;									//y co-ordinate
+	private double cartX;									//cartesian x co-ordinate
+	private double cartY;									//y co-ordinate
 	private double colourIndex;								//b-v colour index to calculate temperature
 	private double parallax; 								//milli arc seconds
 
@@ -30,15 +30,15 @@ public class Star {
 	public Star(String n){
 		
 		name = n;
-		starViewID = iDCounter;
-		iDCounter ++;
+		//starViewID = iDCounter;
+	//	iDCounter ++;
 	}
 	
 	//Hipparcos data in constructor
-	public Star(String id, double vm, double r, double d, double p, double ci, String st){
+	public Star(String id, int sid, double vm, double r, double d, double p, double ci, String st){
 		
-		starViewID = iDCounter;
-		iDCounter ++;
+		starViewID = sid;
+		//iDCounter ++;
 		idNum = id;
 		apMag = vm;
 		ra = r;
@@ -60,8 +60,8 @@ public class Star {
 	public String getStellarClass(){return stellarClass;}
 	public double getTemp(){return temp;}
 	public boolean inSystem(){return inSystem;}
-	public int getCartX(){return cartX;}
-	public int getCartY(){return cartY;}
+	public double getCartX(){return cartX;}
+	public double getCartY(){return cartY;}
 	public double getcolourIndex(){return colourIndex;}
 	
 	public void setName(){name = "DEFAULT!";}	
@@ -72,7 +72,7 @@ public class Star {
 	public void setTemp(){
 		
 		double logTemp = (14.551 - colourIndex)/3.684;
-		System.out.println(logTemp);
+		//System.out.println(logTemp);
 		temp = Math.pow(10, logTemp);
 		
 	}
@@ -96,22 +96,46 @@ public class Star {
 	//calculate cartesian co-ords for HA Equal Area Projection
 	public void calcXCoord(){
 		
-		double operand1 = 2 * Math.sqrt(2) * Math.cos(dec)* Math.sin(ra/2);
-		double operand2 = Math.sqrt(1 + (Math.cos(dec) * Math.cos(ra/2)));
-		double x = (operand1/operand2)*1000;
+		double operand1 = 2 * (Math.sqrt(2))* (Math.cos(Math.toRadians(dec))) * (Math.sin(Math.toRadians(ra/2)));
+		double operand2 = Math.sqrt(1 + (Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra/2))));
+		double x = (operand1/operand2);
+		System.out.println("2 root 2: " + operand1);
+		System.out.println("ra: " + ra);
+		System.out.println("dec: " + dec);
+		System.out.println("op 1: " + operand1);
+		System.out.println("op 2: " + operand2);
+		System.out.println("x coord before mul: " + x);
 		
-		cartX = (int)(x);		
+		
+		//int xcartX = (int)(x);	
+		cartX = x * 100000;
+		System.out.println("x - coord: " +cartX);
 	}
 	
 	public void calcYCoord(){
 		
-		double operand1 = Math.sqrt(2* Math.sin(dec));
-		double operand2 = Math.sqrt(1 + (Math.cos(dec) * Math.cos(ra/2)));
-		double y = (operand1/operand2)*100;
+		double operand1 = Math.sqrt(2)* Math.sin(Math.toRadians(dec));
+		double operand2 = Math.sqrt(1 + (Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra/2))));
+		double y = (operand1/operand2)*1000;
 		
-		cartY = (int)(y);
+		cartY = (y) * (-1);
+		System.out.println("y coord: " + cartY);
 	}
 	
+	
+	public void setCylinCoord(){
+		
+		double x = ra * 100;
+		cartX = (int) x;
+		
+		double y = Math.tan(Math.toRadians(dec)) ;
+		cartY = (int) y;
+		
+		System.out.println("ra: " + ra);
+		System.out.println("dec: " + dec);
+		
+
+	}
 	
 	
 	

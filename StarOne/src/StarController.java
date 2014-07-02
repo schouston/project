@@ -4,12 +4,16 @@ public class StarController implements MouseListener{
 	
 	private StarManager manager;
 	private StarGUI gui;
+	//private StarCanvas canvas;
+	private DisplayPanel display;
 	
-	public StarController(StarManager m, StarGUI g){
+	public StarController(StarManager m, StarGUI g, DisplayPanel d){
 	
 		
 		manager = m;
 		gui = g;
+		//canvas = c;
+		display = d;
 	}
 	
 	public void mousePressed(MouseEvent e){
@@ -21,8 +25,8 @@ public class StarController implements MouseListener{
 		Star [] stars = manager.getStarArray();
 		
 		for (int i = 0; i < stars.length; i++){	
-			int x = stars[i].getCartX();
-			int y = stars[i].getCartY();
+			double x = stars[i].getCartX() + ( display.getXdisplacement());
+			double y = stars[i].getCartY() + (display.getYdisplacement());
 			if ( e.getX() >= x-2  && e.getX() <= x+2 && e.getY() >= y-2 && e.getY() <= y+2 ){
 			
 		//if (e.getX() == stars[i].getCartX() && e.getY() == stars[i].getCartY()){

@@ -12,7 +12,8 @@ public class StarGUI extends JFrame {
 	private JTextArea dataDisplay;
 	private JLabel searchLabel, filterLabel;
 	private JTextField searchbox;
-	private JComboBox distCBox, magCBox;
+	private JComboBox distBox, magBox;
+	private DisplayPanel mainDisplay;
 	
 	
 	private StarManager manager;
@@ -45,27 +46,47 @@ public class StarGUI extends JFrame {
 	
 	public void layoutWest(){
 		west = new JPanel();
-		west.setSize(1000, 400);
+		//west.setSize(100, 400);
 		west.setBackground(Color.gray);
 		dataDisplay = new JTextArea();
 		dataDisplay.setBackground(Color.lightGray);
+		dataDisplay.setEditable(false);
 		//dataDisplay.setLayout();
-		dataDisplay.append(manager.printStarData(2));
+		dataDisplay.append(manager.printStarData(3));
+		
+	
 		west.add(dataDisplay);
 		this.add(west, BorderLayout.WEST);
 	}
 	
 	public void layoutCentre(){
+		//canvas = new StarCanvas(manager);
 		
-		controller = new StarController(manager, this);
-		canvas = new StarCanvas(manager);
-		canvas.setBackground(Color.black);
-		canvas.addMouseListener(controller);
+		mainDisplay = new DisplayPanel(manager);
+		controller = new StarController(manager, this, mainDisplay);
+		 
+		
+		//mainDisplay = new DisplayPanel(manager);
+		//mainDisplay.setBackground(Color.black);
+		mainDisplay.addMouseListener(controller);
+		mainDisplay.setPreferredSize(new Dimension(1600, 1600));
+		
+		JScrollPane scroll = new JScrollPane(mainDisplay,  ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//scroll.setForeground(Color.pink);
+		//scroll.setBounds(800, 0, 50, 50);
+	
+		//this.add(mainDisplay, BorderLayout.CENTER);
+		this.add(scroll, BorderLayout.CENTER);
+		this.getContentPane().add(scroll);
+		
+		
+		//canvas.setBackground(Color.black);
+		//canvas.addMouseListener(controller);
 		
 		
 		//DrawPoint points = new DrawPoint(manager);
 		//canvas.paint(points,BorderLayout.CENTER);
-		this.add(canvas, BorderLayout.CENTER);
+		//this.add(canvas, BorderLayout.CENTER);
 		
 		/*centre = new JPanel();
 		centre.setLayout(new BorderLayout());
@@ -76,8 +97,9 @@ public class StarGUI extends JFrame {
 	}
 	
 	public void layoutSouth(){
+		
 		south = new JPanel();
-		south.setBorder(BorderFactory.createLineBorder(Color.cyan));
+		south.setBorder(BorderFactory.createLineBorder(Color.black));
 		GridLayout grid = new GridLayout(0,4);
 		
 		south.setBackground(Color.lightGray);
@@ -85,26 +107,33 @@ public class StarGUI extends JFrame {
 		searchLabel = new JLabel("Search");
 		searchLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		searchbox = new JTextField();
+		searchbox.setBorder(BorderFactory.createLineBorder(Color.black));
 		searchbox.setSize(10, 10);
-		searchbox.setText("enter crap here");
-		filterLabel = new JLabel("Filter");
+		searchbox.setText("enter name here");
+		filterLabel = new JLabel("Filter by distance");
 		filterLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		JLabel blank = new JLabel("");
 		JLabel blank1 = new JLabel("");
-		JLabel blank2 = new JLabel("");
-		distCBox = new JComboBox();
-		magCBox = new JComboBox();
+		JLabel blank2 = new JLabel("Filter by magnitude");
+		blank2.setBorder(BorderFactory.createLineBorder(Color.black));
+		distBox = new JComboBox();
+		distBox.addItem("up to 5");
+		distBox.addItem("up to 10");
+		magBox = new JComboBox();
+		magBox.addItem("upto 10");
+		magBox.addItem("upto 20");
 		south.add(searchLabel);
 		south.add(blank);
 		south.add(filterLabel);
-		south.add(distCBox);
+		south.add(distBox);
 		south.add(searchbox);
 		south.add(blank1);
 		south.add(blank2);
-		south.add(magCBox);
+		south.add(magBox);
 		
 		
 		this.add(south, BorderLayout.SOUTH);
+		System.out.println("here!!");
 	}
 	
 	public void updateDataDisplay(int index){

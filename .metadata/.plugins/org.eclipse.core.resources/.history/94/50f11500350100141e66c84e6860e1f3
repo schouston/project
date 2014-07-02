@@ -1,0 +1,143 @@
+
+public class Star {
+	
+	private final double TEMP_CONSTANTA = 14.551;			//constant used in setTemperature method
+	//private static int iDCounter = 0;							//static variable counter for unique id
+	
+	private int starViewID;									//unique starview id
+	
+	private String name;									//
+	private String idNum;									//hipparcos id
+	private double distance;								//distance from sun in pc
+	private double apMag;									//apparent (V-band) magnitude
+	private double abMag;									//absolute magnitude
+	private double mass;									//stellar mass (solar-radi)
+	private String stellarClass;							//stellar classification - used for colour
+	private double temp;									//stellar temp (K)
+	private boolean inSystem;								//boolean indicating presence in star system
+	private boolean exoSystem;								//boolean indicating presence of exo-planet system
+	private double ra;										//right ascension
+	private double dec;										//declination
+	private double cartX;									//cartesian x co-ordinate
+	private double cartY;									//y co-ordinate
+	private double colourIndex;								//b-v colour index to calculate temperature
+	private double parallax; 								//milli arc seconds
+
+	
+	public Star(){
+		
+	}
+	public Star(String n){
+		
+		name = n;
+		//starViewID = iDCounter;
+	//	iDCounter ++;
+	}
+	
+	//Hipparcos data in constructor
+	public Star(String id, int sid, double vm, double r, double d, double p, double ci, String st){
+		
+		starViewID = sid;
+		//iDCounter ++;
+		idNum = id;
+		apMag = vm;
+		ra = r;
+		dec = d;
+		parallax = p;
+		colourIndex = ci;
+		stellarClass = st;		
+	}
+	
+	public int getSVid(){return starViewID;}
+	public String getName(){return name;}
+	public String getID(){return idNum;}
+	public double getDistance(){return distance;}
+	public double getApMag(){return apMag;}
+	public double getAbMag(){return abMag;}
+	public double getRA(){return ra;}
+	public double getDec(){return dec;}
+	public double getMass(){return mass;}
+	public String getStellarClass(){return stellarClass;}
+	public double getTemp(){return temp;}
+	public boolean inSystem(){return inSystem;}
+	public double getCartX(){return cartX;}
+	public double getCartY(){return cartY;}
+	public double getcolourIndex(){return colourIndex;}
+	
+	public void setName(){name = "DEFAULT!";}	
+	public void setBV(double bv){colourIndex = bv;	}
+	public void setParallax(double p){parallax = p;}
+	
+	//method to set the star temperature using colourIndex and formula log(T) = (14.551 - colourIndex)/3.684
+	public void setTemp(){
+		
+		double logTemp = (14.551 - colourIndex)/3.684;
+		//System.out.println(logTemp);
+		temp = Math.pow(10, logTemp);
+		
+	}
+	
+	//method to calculate and set star distance using parallax (d = 1/p, p in arcseconds)
+	public void setDistance(){
+		
+		double paraAS = parallax/1000;
+		distance = 1/(paraAS);
+		
+	}
+	
+	//method to set absolute magnitude
+	public void setAbsMag(){
+		
+		double paraAS = parallax/1000;
+		double x = paraAS/100;
+		abMag =  5*(Math.log(x));
+	}
+	
+	//calculate cartesian co-ords for HA Equal Area Projection
+	public void calcXCoord(){
+		
+		double operand1 = 2 * (Math.sqrt(2))* (Math.cos(Math.toRadians(dec))) * (Math.sin(Math.toRadians(ra/2)));
+		double operand2 = Math.sqrt(1 + (Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra/2))));
+		double x = (operand1/operand2);
+		System.out.println("2 root 2: " + operand1);
+		System.out.println("ra: " + ra);
+		System.out.println("dec: " + dec);
+		System.out.println("op 1: " + operand1);
+		System.out.println("op 2: " + operand2);
+		System.out.println("x coord before mul: " + x);
+		
+		
+		//int xcartX = (int)(x);	
+		cartX = x * 100000;
+		System.out.println("x - coord: " +cartX);
+	}
+	
+	public void calcYCoord(){
+		
+		double operand1 = Math.sqrt(2)* Math.sin(Math.toRadians(dec));
+		double operand2 = Math.sqrt(1 + (Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra/2))));
+		double y = (operand1/operand2)*100;
+		
+		cartY = (y) * (-1);
+		System.out.println("y coord: " + cartY);
+	}
+	
+	
+	public void setCylinCoord(){
+		
+		double x = ra * 100;
+		cartX = (int) x;
+		
+		double y = Math.tan(Math.toRadians(dec)) *100;
+		cartY = (int) y;
+		
+		System.out.println("ra: " + ra);
+		System.out.println("dec: " + dec);
+		
+
+	}
+	
+	
+	
+
+}

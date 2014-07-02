@@ -2,7 +2,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-
+//class to create star objects from input text file
 public class CreateStars {
 	
 	private String id;
@@ -12,7 +12,7 @@ public class CreateStars {
 	private double par;
 	private double colourInd;
 	private String specType;
-	
+	//private static int idcounter = 0;
 	private StarManager manager;
 	
 	public CreateStars(){
@@ -37,14 +37,18 @@ public class CreateStars {
 					par = Double.parseDouble(tokens[4]);
 					colourInd = Double.parseDouble(tokens[5]);
 					specType = tokens[6];
-					Star newStar = new Star(id, mag, ra, dec, par, colourInd, specType);
+				//	int svid = idcounter;
+					//idcounter ++;
+					Star newStar = new Star(id, manager.starArrayCounter, mag, ra, dec, par, colourInd, specType);
 					newStar.setName();
 					newStar.setAbsMag();
 					newStar.setDistance();
 					newStar.setTemp();
+					//newStar.setCylinCoord();
 					newStar.calcXCoord();
 					newStar.calcYCoord();
 					manager.addStar(newStar);
+					//System.out.println ( manager.printStarData(counter));
 					counter ++;
 			}
 			}

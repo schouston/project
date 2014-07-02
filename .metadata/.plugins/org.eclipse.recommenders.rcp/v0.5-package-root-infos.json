@@ -189,9 +189,9 @@
       "micro": 0,
       "qualifier": ""
     },
-    "jarFileFingerprint": "8548061f982dcc8843b280dfd86d3fffff57bb59",
-    "jarFileModificationDate": "2013-07-23T14:33:19.811+01:00",
-    "location": "C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\jfr.jar",
+    "jarFileFingerprint": "f4e50ce26184730f4e371fad52ec03bca3e52859",
+    "jarFileModificationDate": "2013-07-23T14:33:19.796+01:00",
+    "location": "C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\ext\\access-bridge-64.jar",
     "javaRuntime": true
   },
   {
@@ -202,9 +202,9 @@
       "micro": 0,
       "qualifier": ""
     },
-    "jarFileFingerprint": "f4e50ce26184730f4e371fad52ec03bca3e52859",
-    "jarFileModificationDate": "2013-07-23T14:33:19.796+01:00",
-    "location": "C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\ext\\access-bridge-64.jar",
+    "jarFileFingerprint": "8548061f982dcc8843b280dfd86d3fffff57bb59",
+    "jarFileModificationDate": "2013-07-23T14:33:19.811+01:00",
+    "location": "C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\jfr.jar",
     "javaRuntime": true
   }
 ]

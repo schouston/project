@@ -15,9 +15,7 @@ public class DrawPoint extends JComponent{
 	
 	public void paintComponent(Graphics g){
 		
-		String colour = "yellow";
-		
-		Star[] drawArray = new Star[98]; 
+		Star[] drawArray = new Star[5]; 
 		drawArray = manager.getStarArray();
 		
 		for (Star star : drawArray){

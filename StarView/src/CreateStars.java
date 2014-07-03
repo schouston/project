@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class CreateStars {
 	
 	private final String INPUT_TEXT_FILE = "processed_181closest_data.txt";
-	private String id;
+	private int id;
 	private double mag;
 	private double ra;
 	private double dec;
@@ -15,6 +15,7 @@ public class CreateStars {
 	private String specType;
 	//private static int idcounter = 0;
 	private StarManager manager;
+	private CommonNameManager nameManager;
 	
 	public CreateStars(){
 		
@@ -30,7 +31,7 @@ public class CreateStars {
 				while (in.hasNextLine()){
 					String line = in.nextLine();
 					String [] tokens = line.split("[ ,]+");
-					id = tokens[0];
+					id = Integer.parseInt(tokens[0]);
 					mag = Double.parseDouble(tokens[1]);
 					ra = Double.parseDouble(tokens[2]);
 					dec = Double.parseDouble(tokens[3]);
@@ -38,7 +39,8 @@ public class CreateStars {
 					colourInd = Double.parseDouble(tokens[5]);
 					specType = tokens[6];
 					Star newStar = new Star(id, manager.getStarViewID(), mag, ra, dec, par, colourInd, specType);
-					newStar.setName();
+					//newStar.setName();
+					
 					newStar.setAbsMag();
 					newStar.setDistance();
 					newStar.setTemp();
@@ -57,11 +59,20 @@ public class CreateStars {
 		catch (IOException e){
 			System.out.println("exception - input text file not found");
 		}
+		this.setNames();
 	}
 	
 	//returns array of star objects
 	public StarManager getManager(){
 		return manager;
+	}
+	
+	public void setNames(){
+		
+		CommonNameManager nameManager = new CommonNameManager(manager.getStarArray());
+		nameManager.processNameFile();
+		nameManager.setNames();
+		
 	}
 
 }

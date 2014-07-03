@@ -30,7 +30,7 @@ public class HippDataIn {
 			try{				
 				while (in.hasNextLine()){
 					String line = in.nextLine();
-					String [] tokens = line.split("[|]+");
+					String [] tokens = line.split("\\s+");
 					System.out.println(tokens[76]);
 
 					if (Double.parseDouble(tokens[11]) > MIN_PARALLAX){

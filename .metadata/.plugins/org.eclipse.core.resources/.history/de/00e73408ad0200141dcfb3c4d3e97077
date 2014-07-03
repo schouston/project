@@ -1,0 +1,25 @@
+import java.util.*;
+
+public class CommonNameManager {
+	
+	private HashMap<Integer, String> names;
+	
+	public CommonNameManager(){
+		
+		names = new HashMap<Integer, String>();
+	}
+
+	public void putName(CommonName n){
+	
+		String name = n.getName();
+		int id = n.getID();
+		
+		names.put(id, name);
+		
+	}
+	
+	public void getNamefromID(int i){
+		
+		System.out.println(names.get(i));
+	}
+}

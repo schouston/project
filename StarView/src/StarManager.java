@@ -2,7 +2,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
+
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 
 public class StarManager extends JComponent{
@@ -41,13 +44,13 @@ public class StarManager extends JComponent{
 		String hippid = "Hipp ID: ";
 		String apmag = "Apparent Magnitude: ";
 		String abmag = "Absolute Magnitude: ";
-		String dist = "Distance: ";
+		String dist = "Distance(pc): ";
 		String r = "Right Ascension: ";
 		String d = "Declination: ";
-		String temp = "Stellar Temperature: ";
+		String temp = "Stellar Temperature(K): ";
 		String type = "Spectral Type: ";
 
-		String starData = String.format("%s %s" + '\n' + "%s %d" + '\n' + "%s %s" + '\n' + "%s%f" + '\n' + "%s%f" + '\n' + "%s%f" + '\n' + "%s%f" + '\n' + "%s%f" + '\n' + "%s%f" + '\n'+
+		String starData = String.format("%s %s" + '\n' + "%s %d" + '\n' + "%s %s" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n'+
 				"%s%s",name, star.getName(), svid, star.getSVid(), hippid, star.getID(), dist, star.getDistance(), apmag, star.getApMag(), abmag, star.getAbMag(), r, star.getRA(), d, star.getDec(), temp,
 				star.getTemp(), type, star.getStellarClass())
 				;
@@ -71,6 +74,51 @@ public class StarManager extends JComponent{
 		g2.fill(point);
 		}
 
+	}
+	
+	public void setStarNames(){
+		
+		CommonNameProcessor pro = new CommonNameProcessor();
+		pro.processNameFile();
+		CommonNameManager nameManager = pro.getNameManager();
+		
+		for (int i = 0; i < SIZE; i++ ){
+			//if (starArray[i].getID() == nameManager.getNamefromID(i);
+			Object key = starArray[i].getID();
+			
+		//if(	nameManager.containsKey(key));
+			
+		}
+	}
+	
+	public Point2D.Double searchStarArray(String s){
+		
+		for (int i= 0; i<SIZE; i++){
+			Star star = starArray[i];
+			if (star.getName().toUpperCase().equals(s.toUpperCase())){
+				
+				System.out.println(star.getName() + " is at position " + star.getCartX() + " " + star.getCartY());
+				JOptionPane.showMessageDialog(this, star.getName() + " is at position " + star.getCartX() + " " + star.getCartY());
+				Point2D.Double point = new Point2D.Double(star.getCartX(), star.getCartY());
+				
+				return point;
+				//return true;
+			}
+			//else 
+				//System.out.println("not found");
+		}
+		
+		System.out.println("not found");
+		JOptionPane.showMessageDialog(this, s + " could not be found");
+		return null;
+	}
+	
+	public Point2D.Double getSearchCoords(int i){
+		
+		Star star = starArray[i];
+		Point2D.Double point = new Point2D.Double(star.getCartX(), star.getCartY());
+		
+		return point;
 	}
 
 }

@@ -1,0 +1,17 @@
+import java.util.*;
+
+public class CommonNameManager {
+	
+	private HashSet<CommonName> names;
+	
+	public CommonNameManager(){
+		
+		names = new HashSet<CommonName>();
+	}
+
+	public void addName(CommonName n){
+		
+		names.add(n);
+		
+	}
+}

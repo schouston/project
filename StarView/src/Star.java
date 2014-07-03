@@ -7,7 +7,7 @@ public class Star {
 	private int starViewID;									//unique starview id
 
 	private String name;									//
-	private String idNum;									//hipparcos id
+	private int idNum;									//hipparcos id
 	private double distance;								//distance from sun in pc
 	private double apMag;									//apparent (V-band) magnitude
 	private double abMag;									//absolute magnitude
@@ -35,7 +35,7 @@ public class Star {
 	}
 
 	//Hipparcos data constructor
-	public Star(String id, int sid, double vm, double r, double d, double p, double ci, String st){
+	public Star(int id, int sid, double vm, double r, double d, double p, double ci, String st){
 
 		starViewID = sid;
 		//iDCounter ++;
@@ -50,7 +50,7 @@ public class Star {
 
 	public int getSVid(){return starViewID;}
 	public String getName(){return name;}
-	public String getID(){return idNum;}
+	public int getID(){return idNum;}
 	public double getDistance(){return distance;}
 	public double getApMag(){return apMag;}
 	public double getAbMag(){return abMag;}
@@ -64,7 +64,12 @@ public class Star {
 	public double getCartY(){return cartY;}
 	public double getcolourIndex(){return colourIndex;}
 
-	public void setName(){name = "DEFAULT!";}	
+	public void setName(String s){
+		name = s;		
+		}
+	
+	
+	
 	public void setBV(double bv){colourIndex = bv;	}
 	public void setParallax(double p){parallax = p;}
 
@@ -91,7 +96,7 @@ public class Star {
 		double x = paraAS/100;
 		abMag =  5*(Math.log(x));
 	}
-
+	
 	//calculate cartesian co-ords for HA Equal Area Projection
 	public void calcXCoord(){
 

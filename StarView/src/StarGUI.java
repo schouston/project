@@ -10,18 +10,20 @@ public class StarGUI extends JFrame {
 	private JPanel west, centre, south;
 	//private StarCanvas canvas;
 	private JTextArea dataDisplay;
-	private JLabel searchLabel, filterLabel;
-	private JTextField searchbox;
+	private JLabel searchLabel, filterDistLabel, filterMagLabel;
+	public JTextField searchbox;
+	public JButton returnButton;
 	private JComboBox<String> distBox, magBox;
 	private DisplayPanel mainDisplay;
+	
 	
 	
 	private StarManager manager;
 	//private CreateStars stars;
 	private StarController controller;
 	
-	final int FRAME_WIDTH = 1400;
-	final int FRAME_HEIGHT = 1000;
+	final int FRAME_WIDTH = 1600;
+	final int FRAME_HEIGHT = 920;
 	
 	
 	public StarGUI(StarController c, StarManager m, DisplayPanel d){
@@ -47,17 +49,37 @@ public class StarGUI extends JFrame {
 	}*/
 	
 	public void layoutWest(){
-		west = new JPanel();
+		west = new JPanel(new BorderLayout());
+		//BorderLayout border = new BorderLayout();
+		//west.setLayout(border);
 		//west.setSize(100, 400);
 		west.setBackground(Color.gray);
+		Font font = new Font("Verdana", Font.PLAIN, 12);
 		dataDisplay = new JTextArea();
+		dataDisplay.setFont(font);
 		dataDisplay.setBackground(Color.lightGray);
 		dataDisplay.setEditable(false);
 		//dataDisplay.setLayout();
 		dataDisplay.append(manager.printStarData(3));
 		
+		//JButton returnButton = new JButton("Centre on sun");
+		Font buttonfont = new Font("Verdana", Font.BOLD, 14);
+		JPanel buttonPanel = new JPanel(new BorderLayout());
+		returnButton = new JButton("Centre on sun");
+		returnButton.setFont(buttonfont);
+		returnButton.addActionListener(controller);
+		JButton systemButton = new JButton("View Star System");
+		systemButton.setFont(buttonfont);
+		JButton planetButton = new JButton("View Planetary System");
+		planetButton.setFont(buttonfont);
+		///returnButton.setSize(2,2);
+		buttonPanel.add(returnButton, BorderLayout.SOUTH);
+		buttonPanel.add(systemButton, BorderLayout.NORTH);
+		buttonPanel.add(planetButton, BorderLayout.CENTER);
 	
-		west.add(dataDisplay);
+		west.add(dataDisplay, BorderLayout.NORTH);
+		west.add(buttonPanel, BorderLayout.SOUTH);
+		//west.add(returnButton, BorderLayout.SOUTH);
 		this.add(west, BorderLayout.WEST);
 	}
 	
@@ -93,18 +115,23 @@ public class StarGUI extends JFrame {
 		
 		south.setBackground(Color.lightGray);
 		south.setLayout(grid);
+		Font font = new Font("Verdana", Font.BOLD, 12);
 		searchLabel = new JLabel("Search");
+		searchLabel.setFont(font);
 		searchLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		searchbox = new JTextField();
+		searchbox.addActionListener(controller);
 		searchbox.setBorder(BorderFactory.createLineBorder(Color.black));
 		searchbox.setSize(10, 10);
 		searchbox.setText("enter name here");
-		filterLabel = new JLabel("Filter by distance");
-		filterLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		filterDistLabel = new JLabel("Filter by distance");
+		filterDistLabel.setFont(font);
+		filterDistLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		JLabel blank = new JLabel("");
 		JLabel blank1 = new JLabel("");
-		JLabel blank2 = new JLabel("Filter by magnitude");
-		blank2.setBorder(BorderFactory.createLineBorder(Color.black));
+		filterMagLabel = new JLabel("Filter by magnitude");
+		filterMagLabel.setFont(font);
+		filterMagLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		distBox = new JComboBox<String>();
 		distBox.addItem("up to 5");
 		distBox.addItem("up to 10");
@@ -113,11 +140,11 @@ public class StarGUI extends JFrame {
 		magBox.addItem("upto 20");
 		south.add(searchLabel);
 		south.add(blank);
-		south.add(filterLabel);
+		south.add(filterDistLabel);
 		south.add(distBox);
 		south.add(searchbox);
 		south.add(blank1);
-		south.add(blank2);
+		south.add(filterMagLabel);
 		south.add(magBox);
 		
 		this.add(south, BorderLayout.SOUTH);

@@ -20,6 +20,7 @@ public class CreateStars {
 	public CreateStars(){
 		
 		manager = new StarManager();
+		createHippStars();
 	}
 	
 	public void createHippStars(){
@@ -40,13 +41,6 @@ public class CreateStars {
 					specType = tokens[6];
 					Star newStar = new Star(id, manager.getStarViewID(), mag, ra, dec, par, colourInd, specType);
 					//newStar.setName();
-					
-					newStar.setAbsMag();
-					newStar.setDistance();
-					newStar.setTemp();
-					//newStar.setCylinCoord();
-					newStar.calcXCoord();
-					newStar.calcYCoord();
 					manager.addStar(newStar);
 					//System.out.println ( manager.printStarData(counter));
 			}

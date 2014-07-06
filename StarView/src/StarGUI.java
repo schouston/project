@@ -13,8 +13,10 @@ public class StarGUI extends JFrame {
 	private JLabel searchLabel, filterDistLabel, filterMagLabel;
 	public JTextField searchbox;
 	public JButton returnButton;
-	private JComboBox<String> distBox, magBox;
+	public JComboBox<String> distBox, magBox;
 	private DisplayPanel mainDisplay;
+	
+	public JMenu distMenu;
 	
 	
 	
@@ -60,7 +62,7 @@ public class StarGUI extends JFrame {
 		dataDisplay.setBackground(Color.lightGray);
 		dataDisplay.setEditable(false);
 		//dataDisplay.setLayout();
-		dataDisplay.append(manager.printStarData(3));
+		dataDisplay.append(manager.printSunData());
 		
 		//JButton returnButton = new JButton("Centre on sun");
 		Font buttonfont = new Font("Verdana", Font.BOLD, 14);
@@ -132,15 +134,27 @@ public class StarGUI extends JFrame {
 		filterMagLabel = new JLabel("Filter by magnitude");
 		filterMagLabel.setFont(font);
 		filterMagLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		distBox = new JComboBox<String>();
-		distBox.addItem("up to 5");
-		distBox.addItem("up to 10");
-		magBox = new JComboBox<String>();
-		magBox.addItem("upto 10");
-		magBox.addItem("upto 20");
+		
+		/*distMenu = new JMenu("dist filter");
+		JMenuItem ten = new JMenuItem("upto 10");
+		JMenuItem five = new JMenuItem("upto 5");
+		distMenu.add(ten);
+		distMenu.add(five);*/
+		
+		String [] filtDStrings = { "all", "upto 5", "upto 10"};
+		distBox = new JComboBox<String>(filtDStrings);
+		distBox.addActionListener(controller);
+		//distBox.addItem("up to 5");
+		//distBox.addItem("up to 10");
+		String [] filtMStrings = {"all", "upto x", " upto y"};
+		magBox = new JComboBox<String>(filtMStrings);
+		magBox.addActionListener(controller);
+		//magBox.addItem("upto 10");
+		//magBox.addItem("upto 20");
 		south.add(searchLabel);
 		south.add(blank);
 		south.add(filterDistLabel);
+		//south.add(distMenu);
 		south.add(distBox);
 		south.add(searchbox);
 		south.add(blank1);
@@ -152,9 +166,11 @@ public class StarGUI extends JFrame {
 	
 	//method to display data on selected star
 	public void updateDataDisplay(int index){
-		
-		dataDisplay.setText("");		
-		dataDisplay.append(manager.printStarData(index));
+		dataDisplay.setText("");	
+		if (index == -1)
+			dataDisplay.append(manager.printSunData());
+		else
+			dataDisplay.append(manager.printStarData(index));
 	}
 	
 }

@@ -13,6 +13,8 @@ public class DisplayPanel extends JPanel{
 
 	private double width, height, xdis, ydis;
 
+	private Star[] drawArray;
+
 	public DisplayPanel(StarManager m){
 
 		manager = m;
@@ -24,7 +26,7 @@ public class DisplayPanel extends JPanel{
 
 	public double getXdisplacement(){ return xdis;}
 	public double getYdisplacement(){return ydis;}
-	
+
 	// method to set (0,0) on display
 	public void setcoords(){
 
@@ -36,12 +38,12 @@ public class DisplayPanel extends JPanel{
 		System.out.println("height: " + height);
 		System.out.println(getSize());
 	}
-	
+
 	public void resetCoords(Point2D.Double d){
 		xdis -= d.x;
 		ydis -= d.y;
-		
-		
+
+
 	}
 
 	public void	paint(Graphics g){
@@ -54,11 +56,17 @@ public class DisplayPanel extends JPanel{
 		gs2.fill(sun);
 
 		//AffineTransform tform = AffineTransform.getTranslateInstance(width/2, height);
-		Star[] drawArray =  manager.getStarArray();
+		if(manager.filterSelected){
+			drawArray = manager.getDistanceFilterArray(1);
+			System.out.println("here!!");
+		}
+		else
+			drawArray =  manager.getStarArray();
 
 		for (Star star : drawArray){
 
 			Graphics2D g2 = (Graphics2D) g;
+			
 			//g2.setTransform(tform);
 			Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX() + xdis, star.getCartY() + ydis, 5, 5);
 			if(star.getStellarClass().substring(0, 1).equals("O")) g2.setColor(Color.blue);
@@ -71,7 +79,10 @@ public class DisplayPanel extends JPanel{
 			else if (star.getStellarClass().substring(0, 1).equals("L"))g2.setColor(Color.magenta);
 			else g2.setColor(Color.yellow);
 			g2.fill(point);
+			
+			if (star.hasCommonName)
+				g2.drawString(star.getName(), (int) (star.getCartX() + xdis + 5), (int) (star.getCartY() + ydis + 5));
 		}
-		
+
 	}
 }

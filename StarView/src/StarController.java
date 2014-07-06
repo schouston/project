@@ -11,7 +11,6 @@ public class StarController implements MouseListener, ActionListener{
 	
 	public StarController(StarManager m){
 	
-		
 		manager = m;
 		display = new DisplayPanel(manager);
 		gui = new StarGUI(this, manager, display);
@@ -26,6 +25,10 @@ public class StarController implements MouseListener, ActionListener{
 	
 	public void mouseClicked(MouseEvent e){
 		
+		if ( e.getX() >= display.getXdisplacement()-5  && e.getX() <= display.getXdisplacement()+5 && e.getY() >= display.getYdisplacement()-5 
+				&& e.getY() <= display.getYdisplacement()+5 )
+			gui.updateDataDisplay(-1);
+		else{
 		Star [] stars = manager.getStarArray();
 		
 		for (int i = 0; i < stars.length; i++){	
@@ -36,13 +39,15 @@ public class StarController implements MouseListener, ActionListener{
 		//if (e.getX() == stars[i].getCartX() && e.getY() == stars[i].getCartY()){
 			System.out.println("hit");
 			gui.updateDataDisplay(i);
+			//display.resetCoords(d);
+			}
 		}
 			
 		}
 		//System.out.println(stars[0].getCartX());
-		//System.out.println(e.getX());
+		System.out.println(e.getX());
 		//System.out.println(stars[0].getCartY());
-		//System.out.println(e.getY());
+		System.out.println(e.getY());
 		//System.out.println("press");
 		
 	}
@@ -68,11 +73,24 @@ public class StarController implements MouseListener, ActionListener{
 			
 			display.resetCoords(point);
 			display.repaint();
+			gui.updateDataDisplay(manager.getSearchIndex());
 		}
 		
 		if (e.getSource() == gui.returnButton){
 			display.setcoords();
 			display.repaint();
+			gui.updateDataDisplay(-1);
+		}
+		
+		if (e.getSource() == gui.distBox){
+			manager.filterSelected = true;
+			//String selectedString = (String) gui.distBox.getSelectedItem();
+			//if(selectedString.equals("upto 5"))
+				//manager.getDistanceFilterArray(1);
+		//	if(selectedString.equals("upto 10"))
+			//	manager.getDistanceFilterArray(10);
+			display.repaint();
+			
 		}
 	}
 }

@@ -1,0 +1,23 @@
+import java.awt.*;
+
+import javax.swing.*;
+
+
+
+public class ExoDisplay extends JFrame{
+
+	private int FRAME_WIDTH = 600;
+	private int FRAME_HEIGHT = 600;
+	
+	public ExoDisplay(){
+		
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Star System GUI");
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setVisible(true);
+		JPanel exoPanel = new JPanel();
+		exoPanel.setBackground(Color.black);
+		this.add(exoPanel);
+		
+	}
+}

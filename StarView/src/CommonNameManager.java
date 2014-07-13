@@ -73,7 +73,7 @@ public class CommonNameManager {
 			
 			if (names.containsKey(star.getID())){
 				star.setName(names.get(star.getID()));
-				star.hasCommonName = true;
+				star.setCommonNameBoole(true);
 			}
 			else
 				star.setName("hippID_" + Integer.toString(star.getID()));

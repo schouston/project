@@ -12,7 +12,7 @@ public class StarGUI extends JFrame {
 	private JTextArea dataDisplay;
 	private JLabel searchLabel, filterDistLabel, filterMagLabel;
 	public JTextField searchbox;
-	public JButton returnButton;
+	public JButton returnButton, systemButton, exoButton;
 	public JComboBox<String> distBox, magBox;
 	private DisplayPanel mainDisplay;
 	
@@ -67,17 +67,19 @@ public class StarGUI extends JFrame {
 		//JButton returnButton = new JButton("Centre on sun");
 		Font buttonfont = new Font("Verdana", Font.BOLD, 14);
 		JPanel buttonPanel = new JPanel(new BorderLayout());
-		returnButton = new JButton("Centre on sun");
+		returnButton = new JButton("Centre Display");
 		returnButton.setFont(buttonfont);
 		returnButton.addActionListener(controller);
-		JButton systemButton = new JButton("View Star System");
+		systemButton = new JButton("View Star System");
+		systemButton.addActionListener(controller);
 		systemButton.setFont(buttonfont);
-		JButton planetButton = new JButton("View Planetary System");
-		planetButton.setFont(buttonfont);
+		exoButton = new JButton("View Planetary System");
+		exoButton.addActionListener(controller);
+		exoButton.setFont(buttonfont);
 		///returnButton.setSize(2,2);
 		buttonPanel.add(returnButton, BorderLayout.SOUTH);
 		buttonPanel.add(systemButton, BorderLayout.NORTH);
-		buttonPanel.add(planetButton, BorderLayout.CENTER);
+		buttonPanel.add(exoButton, BorderLayout.CENTER);
 	
 		west.add(dataDisplay, BorderLayout.NORTH);
 		west.add(buttonPanel, BorderLayout.SOUTH);
@@ -141,12 +143,12 @@ public class StarGUI extends JFrame {
 		distMenu.add(ten);
 		distMenu.add(five);*/
 		
-		String [] filtDStrings = { "all", "upto 5", "upto 10"};
+		String [] filtDStrings = { "all", "upto 5pc", "upto 7pc"};
 		distBox = new JComboBox<String>(filtDStrings);
 		distBox.addActionListener(controller);
 		//distBox.addItem("up to 5");
 		//distBox.addItem("up to 10");
-		String [] filtMStrings = {"all", "upto x", " upto y"};
+		String [] filtMStrings = {"all", "upto 7", "upto 3"};
 		magBox = new JComboBox<String>(filtMStrings);
 		magBox.addActionListener(controller);
 		//magBox.addItem("upto 10");

@@ -152,7 +152,7 @@ public class StarManager extends JComponent{
 		return searchIndex;
 	}
 
-	public Star[] getDistanceFilterArray(int d){
+public Star[] getDistanceFilterArray(double d){
 		
 		//filterSelected = true;
 		Star[] filterArray = new Star[SIZE];
@@ -161,11 +161,61 @@ public class StarManager extends JComponent{
 		for (int i = 0; i<SIZE; i++){
 
 			if (starArray[i].getDistance() <= d){
+				//System.out.println(counter);
 				filterArray[counter] = starArray[i];
+			//	System.out.println(filterArray[counter].getName());
+				//System.out.println(starArray[i].getName());
 				counter ++;
+				
 			}
 		}
-		return filterArray;
+		
+		Star[] returnArray = new Star[counter];
+		
+		//System.out.println(returnArray.length);
+		
+		//for (int i = 0; i<=)
+		
+		for (int j = 0; j < counter; j++){
+			returnArray[j] = filterArray[j];
+		}
+		
+		//System.out.println("end of dist method: " + returnArray[0].getName());
+		
+		return returnArray;
+	}
+	
+public Star[] getMagFilterArray(double m){
+		
+		//filterSelected = true;
+		Star[] filterArray = new Star[SIZE];
+		int counter = 0;
+		
+		for (int i = 0; i<SIZE; i++){
+
+			if (starArray[i].getApMag()<= m){
+				//System.out.println(counter);
+				filterArray[counter] = starArray[i];
+				//System.out.println(filterArray[counter].getName());
+				//System.out.println(starArray[i].getName());
+				counter ++;
+				
+			}
+		}
+		
+		Star[] returnArray = new Star[counter];
+		
+		//System.out.println(returnArray.length);
+		
+		//for (int i = 0; i<=)
+		
+		for (int j = 0; j < counter; j++){
+			returnArray[j] = filterArray[j];
+		}
+		
+		//System.out.println("end of magfilter method: " + returnArray[0].getName());
+		
+		return returnArray;
 	}
 
 }

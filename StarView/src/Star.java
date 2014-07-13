@@ -24,15 +24,18 @@ public class Star {
 	private double colourIndex;								//b-v colour index to calculate temperature
 	private double parallax; 								//milli arc seconds
 	
-	public boolean hasCommonName;
-
+	private String ccdmID = "0";
+	private boolean hasCommonName;
+	
+public boolean getCommonNameBool(){return hasCommonName;}
+public void setCommonNameBoole(boolean b){hasCommonName = b;}
 
 	public Star(){
 
 	}
 
 	//Hipparcos data constructor
-	public Star(int id, int sid, double vm, double r, double d, double p, double ci, String st){
+	public Star(int id, int sid, double vm, double r, double d, double p, double ci, String st, String cid){
 
 		starViewID = sid;
 		//iDCounter ++;
@@ -42,7 +45,8 @@ public class Star {
 		dec = d;
 		parallax = p;
 		colourIndex = ci;
-		stellarClass = st;	
+		stellarClass = st;
+		ccdmID = cid;
 		
 		setAbsMag();
 		setDistance();

@@ -10,14 +10,16 @@ import javax.swing.*;
 public class DisplayPanel extends JPanel{
 
 	private StarManager manager;
+	private StarController controller;
 
 	private double width, height, xdis, ydis;
 
 	private Star[] drawArray;
 
-	public DisplayPanel(StarManager m){
+	public DisplayPanel(StarManager m, StarController c){
 
 		manager = m;
+		controller = c;
 		this.setBounds(0, 0, 1600, 1600);
 		this.setcoords();
 		this.setBackground(Color.black);
@@ -50,18 +52,38 @@ public class DisplayPanel extends JPanel{
 
 		super.paint(g);
 		Graphics2D gs2 = (Graphics2D) g;
-		Ellipse2D.Double sun = new Ellipse2D.Double(xdis, ydis, 15, 15);
+		Ellipse2D.Double sun = new Ellipse2D.Double(xdis, ydis, 10, 10);
 		//gs2.translate(width/2, height/2);
 		gs2.setColor(Color.yellow);
 		gs2.fill(sun);
 
 		//AffineTransform tform = AffineTransform.getTranslateInstance(width/2, height);
-		if(manager.filterSelected){
-			drawArray = manager.getDistanceFilterArray(1);
-			System.out.println("here!!");
+		
+		if(controller.getFilterFlag() == 1){
+			drawArray = manager.getDistanceFilterArray(controller.getDistFilterInt());
+			System.out.println(drawArray);
+			System.out.println(drawArray.length);
+			System.out.println(drawArray[0].getName());
+			System.out.println(drawArray[0].getCartX());
+			//System.out.println("here!!");
+			System.out.println("filt length: " + drawArray.length);
+			//manager.filterSelected = false;
 		}
-		else
+		else if(controller.getFilterFlag() == 2){
+			drawArray = manager.getMagFilterArray(controller.getMagFilterInt());
+			System.out.println(drawArray);
+			System.out.println(drawArray.length);
+			System.out.println(drawArray[0].getName());
+			System.out.println(drawArray[0].getCartX());
+			//System.out.println("here!!");
+			System.out.println("filt length: " + drawArray.length);
+			//manager.filterSelected = false;
+		}
+		else{
 			drawArray =  manager.getStarArray();
+			System.out.println("no filter: " +drawArray.length);
+		}
+		
 
 		for (Star star : drawArray){
 
@@ -80,7 +102,7 @@ public class DisplayPanel extends JPanel{
 			else g2.setColor(Color.yellow);
 			g2.fill(point);
 			
-			if (star.hasCommonName)
+			if (star.getCommonNameBool())
 				g2.drawString(star.getName(), (int) (star.getCartX() + xdis + 5), (int) (star.getCartY() + ydis + 5));
 		}
 

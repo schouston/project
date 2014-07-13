@@ -5,7 +5,7 @@ import java.util.Scanner;
 //class to create star objects from input text file
 public class CreateStars {
 	
-	private final String INPUT_TEXT_FILE = "processed_181closest_data.txt";
+	private final String INPUT_TEXT_FILE = "processed_181closest_datawithccdm.txt";
 	private int id;
 	private double mag;
 	private double ra;
@@ -31,7 +31,7 @@ public class CreateStars {
 			try{
 				while (in.hasNextLine()){
 					String line = in.nextLine();
-					String [] tokens = line.split("[ ,]+");
+					String [] tokens = line.split("[,]+");
 					id = Integer.parseInt(tokens[0]);
 					mag = Double.parseDouble(tokens[1]);
 					ra = Double.parseDouble(tokens[2]);
@@ -39,7 +39,8 @@ public class CreateStars {
 					par = Double.parseDouble(tokens[4]);
 					colourInd = Double.parseDouble(tokens[5]);
 					specType = tokens[6];
-					Star newStar = new Star(id, manager.getStarViewID(), mag, ra, dec, par, colourInd, specType);
+					String ccdmID = tokens[7];
+					Star newStar = new Star(id, manager.getStarViewID(), mag, ra, dec, par, colourInd, specType, ccdmID);
 					//newStar.setName();
 					manager.addStar(newStar);
 					//System.out.println ( manager.printStarData(counter));

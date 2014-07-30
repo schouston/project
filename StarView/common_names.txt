@@ -48,4 +48,5 @@ Etamin	87833	Zaurak	18543
 Fomalhaut	113368	3C_273	60936
 Proxima_Centauri 70890	Alpha_Centauri_B	71681
 Alpha_Centauri_A	71683	Epsilon_Eridani	16537
-Lacaille_9352	114046	Tau_Ceti	8102	
+Lacaille_9352	114046	Tau_Ceti	8102
+Gamma_Cephei	116727	Gliese_777	98767	

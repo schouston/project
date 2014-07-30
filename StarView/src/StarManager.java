@@ -12,7 +12,7 @@ public class StarManager extends JComponent{
 
 	//class to store array of Star Objects
 
-	private final int SIZE = 181;  //array size
+	private final int SIZE = 935;  //array size
 	private Star[] starArray;	//array of star objects
 	public static int starArrayCounter = 0;	//counter for number of star objects entered
 	private int searchIndex = 0;
@@ -51,10 +51,12 @@ public class StarManager extends JComponent{
 		String d = "Declination: ";
 		String temp = "Stellar Temperature(K): ";
 		String type = "Spectral Type: ";
+		String system = "In System: ";
+		String hd = "henry draper: ";
 
 		String starData = String.format("%s %s" + '\n' + "%s %d" + '\n' + "%s %s" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n' + "%s%.2f" + '\n'+
-				"%s%s",name, star.getName(), svid, star.getSVid(), hippid, star.getID(), dist, star.getDistance(), apmag, star.getApMag(), abmag, star.getAbMag(), r, star.getRA(), d, star.getDec(), temp,
-				star.getTemp(), type, star.getStellarClass())
+				"%s%s" + '\n' + "%s%s" + '\n' + "%s%s",name, star.getName(), svid, star.getSVid(), hippid, star.getID(), dist, star.getDistance(), apmag, star.getApMag(), abmag, star.getAbMag(), r, star.getRA(), d, star.getDec(), temp,
+				star.getTemp(), type, star.getStellarClass(), system, star.getInSystem(), hd, star.getHDid())
 				;
 		//System.out.println(starData);	
 		return starData;
@@ -75,9 +77,10 @@ public class StarManager extends JComponent{
 		String d = "Declination: ";
 		String temp = "Stellar Temperature(K): ";
 		String type = "Spectral Type: ";
+		
 
 		String starData = String.format("%s%s" + '\n' + "%s %s" + '\n' + "%s %s" + '\n' + "%s%s" + '\n' + "%s%s" + '\n' + "%s%s" + '\n' + "%s%s" + '\n' + "%s%s" + '\n' + "%s%s" + '\n'+
-				"%s%s",name, "Sun", svid, "0", hippid,"0", dist, "0", apmag, "-26.74", abmag, "4.83", r, "0", d, "0", temp,
+				"%s%s"  ,name, "Sun", svid, "0", hippid,"0", dist, "0", apmag, "-26.74", abmag, "4.83", r, "0", d, "0", temp,
 				"5778", type, "G2V")
 				;
 		//System.out.println(starData);	

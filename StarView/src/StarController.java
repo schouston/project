@@ -1,5 +1,8 @@
 import java.awt.event.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
+
+import javax.swing.JOptionPane;
 
 //class to listen for events. also creates gui object
 public class StarController implements MouseListener, ActionListener{
@@ -15,6 +18,10 @@ public class StarController implements MouseListener, ActionListener{
 	private int filterFlag;			//0 no filter, 1 dist filter, 2 mag filter
 	private int distFilterInt;		//integer to pass as parameter for distance filter
 	private int magFilterInt;		//integer to pass as parameter for magnitude filter
+
+	private CreatePlanets createP;
+	private boolean planetsDone = false;
+	private Star selectedStar;
 
 	public StarController(StarManager m){
 
@@ -45,17 +52,22 @@ public class StarController implements MouseListener, ActionListener{
 				if ( e.getX() >= x-2  && e.getX() <= x+2 && e.getY() >= y-2 && e.getY() <= y+2 ){
 
 					//if (e.getX() == stars[i].getCartX() && e.getY() == stars[i].getCartY()){
-					System.out.println("hit");
+					//System.out.println("hit");
 					gui.updateDataDisplay(i);
+					selectedStar = stars[i];
+					Point2D.Double point = new Point2D.Double(stars[i].getCartX(), stars[i].getCartY());
+					display.resetCoords(point);
+					display.repaint();
+					
 					//display.resetCoords(d);
 				}
 			}
 
 		}
 		//System.out.println(stars[0].getCartX());
-		System.out.println(e.getX());
+		//System.out.println(e.getX());
 		//System.out.println(stars[0].getCartY());
-		System.out.println(e.getY());
+		//System.out.println(e.getY());
 		//System.out.println("press");
 
 	}
@@ -77,10 +89,11 @@ public class StarController implements MouseListener, ActionListener{
 		if (e.getSource() == gui.systemButton){
 			SystemDisplay systemDis = new SystemDisplay();				//create system display window	
 		}
-		
+
 		if (e.getSource() == gui.exoButton){							//create exoplanet display window
-			ExoDisplay exoDis = new ExoDisplay();
-		
+
+			this.processExoButton();
+
 		}
 
 		if (e.getSource() == gui.returnButton){							//return main display to 0
@@ -88,7 +101,7 @@ public class StarController implements MouseListener, ActionListener{
 			display.repaint();
 			gui.updateDataDisplay(-1);
 		}
-		
+
 		if (e.getSource() == gui.searchbox) {							//search for star
 			//manager.searchStarArray(gui.searchbox.getText().trim());
 			Point2D.Double point = manager.searchStarArray(gui.searchbox.getText().trim());
@@ -97,8 +110,9 @@ public class StarController implements MouseListener, ActionListener{
 			display.resetCoords(point);
 			display.repaint();
 			gui.updateDataDisplay(manager.getSearchIndex());
+			selectedStar = manager.getStarArray()[manager.getSearchIndex()];
 		}
-		
+
 		if (e.getSource() == gui.distBox){							//distance filter
 
 			filterFlag = 1;
@@ -132,15 +146,57 @@ public class StarController implements MouseListener, ActionListener{
 			display.repaint();
 
 		}
-		
+
 	}
-	
+
 	public int getFilterFlag(){												//return method for filter flag
 		return filterFlag;
 	}
-	
+
 	public int getDistFilterInt(){ return distFilterInt;}					//return parameter for distance filter
 	public int getMagFilterInt(){return magFilterInt;}						//return parameter for magnitude filter
+
+	public void processExoButton(){
+		if(!planetsDone){
+			createP = new CreatePlanets();
+			planetsDone = true;
+		}
+		//else
+		//System.out.println("planets done");
+
+		Planet[] planets = createP.getPlanetArray();
+		Planet[] subPlanetSystem = new Planet[6];
+		int planetCounter = 0;
+		System.out.println(planets[0].getName());
+		for (Planet planet : planets){
+			System.out.println(planet.getName());
+			if(planet.getParent().toUpperCase().equals(selectedStar.getName().toUpperCase()) || planet.getParent().toUpperCase().equals(selectedStar.getHDid())){
+				subPlanetSystem[planetCounter] = planet;
+				planetCounter ++;				
+			}	
+		}
+
+		if (planetCounter == 0)
+			JOptionPane.showMessageDialog(null, selectedStar.getName() + " does not have any known planets");
+		//System.out.println("no planets");
+		else{
+			Planet[] displayPlanets = new Planet[planetCounter];
+
+			for (int i = 0; i < planetCounter ;i++){
+				displayPlanets[i] = subPlanetSystem[i];
+			}
+
+			ExoManager exoManager = new ExoManager(displayPlanets, selectedStar);
+			exoManager.printPlanetData();
+			//Planet p = new Planet("Kapteyn's c", 2, 0.311,121 ,0.23, 2014, "don't know!", "Kapteyn's");
+			//System.out.println(p.getName());
+			//Planet p1 = new Planet ("Kap's b", 2, 0.168, 48, 0.21, 2014, "don't know", "Kapteyn's");
+			//	exoManager.addPlanet(p1);
+			//.addPlanet(p);
+			//ExoDisplay exoDis = new ExoDisplay(exoManager);
+			ExoFrame exoFrame = new ExoFrame(exoManager);
+		}
+	}
 
 
 }

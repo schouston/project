@@ -1,0 +1,19 @@
+
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		HippDataIn in = new HippDataIn();
+		in.readInCrossRefFile();
+		in.readInFile();
+		
+		//ExoDataIn in = new ExoDataIn();
+		//in.readInExoData();
+
+	}
+
+}

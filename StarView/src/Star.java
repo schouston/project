@@ -1,7 +1,10 @@
+import java.awt.Color;
+
 public class Star {
 
 	private final double TEMP_CONSTANT_A = 14.551;			//constants used in setTemperature method
 	private final double TEMP_CONSTANT_B = 3.684;			//
+	private final double SCALING_FACTOR = 280;				//scaling factor for co-ordinates
 	//private static int iDCounter = 0;						//static variable counter for unique id
 
 	private int starViewID;									//unique starview id
@@ -22,10 +25,18 @@ public class Star {
 	private double cartY;									//y co-ordinate
 	private double cartZ;
 	private double colourIndex;								//b-v colour index to calculate temperature
+	private Color displayColor;
 	private double parallax; 								//milli arc seconds
 	
 	private String ccdmID = "0";
 	private boolean hasCommonName;
+	
+	private String HDid;
+	private String HRid;
+	
+	private double displaySize;
+	
+	
 	
 public boolean getCommonNameBool(){return hasCommonName;}
 public void setCommonNameBoole(boolean b){hasCommonName = b;}
@@ -35,26 +46,37 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	}
 
 	//Hipparcos data constructor
-	public Star(int id, int sid, double vm, double r, double d, double p, double ci, String st, String cid){
+	public Star(int id, int sid, double vm, double r, double d, double p, double ci, String st, String cid, String hd, String hr){
 
 		starViewID = sid;
 		//iDCounter ++;
 		idNum = id;
 		apMag = vm;
+		
+		if (r>180) ra = r - 360;
+		else
 		ra = r;
+		
 		dec = d;
 		parallax = p;
 		colourIndex = ci;
 		stellarClass = st;
 		ccdmID = cid;
 		
+		if (!cid.equals("0")) inSystem = true;
+		HDid = hd;
+		HRid = hr;
+		
 		setAbsMag();
 		setDistance();
+		setDisplaySize();
 		setTemp();
+		//setHAProjection();
 		//setCylinCoord();
-		//calcXCoord();
-		//calcYCoord();
-		setCartesian();
+		calcXCoord();
+		calcYCoord();
+		//setCartesian();
+		setDisplayColor();
 	}
 
 	public int getSVid(){return starViewID;}
@@ -68,10 +90,16 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	public double getMass(){return mass;}
 	public String getStellarClass(){return stellarClass;}
 	public double getTemp(){return temp;}
-	public boolean inSystem(){return inSystem;}
+	public boolean getInSystem(){return inSystem;}
+	public boolean inExoSystem(){return exoSystem;}
 	public double getCartX(){return cartX;}
 	public double getCartY(){return cartY;}
 	public double getcolourIndex(){return colourIndex;}
+	public Color getDisplayColor(){return displayColor;}
+	public String getHDid(){return HDid;}
+	public String getHRid(){return HRid;}
+	public double getDisplaySize(){return displaySize;}
+
 
 	public void setName(String s){
 		name = s;		
@@ -95,7 +123,15 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 
 		double paraAS = parallax/1000;
 		distance = 1/(paraAS);
-
+	}
+	
+	private void setDisplaySize(){
+		
+		if(distance <= 5) displaySize = 6;
+		else if (distance <=10) displaySize = 5;
+		else if (distance <=15) displaySize = 4;
+		else if (distance <=20) displaySize = 3;
+		else displaySize = 2;
 	}
 
 	//method to set absolute magnitude
@@ -104,6 +140,20 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		double paraAS = parallax/1000;
 		double x = paraAS/100;
 		abMag =  5*(Math.log(x));
+	}
+	
+	private void setDisplayColor(){
+		
+		if(stellarClass.substring(0, 1).equals("O")) displayColor = Color.blue;
+		else if (stellarClass.substring(0, 1).equals("B"))displayColor = (Color.lightGray);
+		else if (stellarClass.substring(0, 1).equals("A"))displayColor =(Color.white);
+		else if (stellarClass.substring(0, 1).equals("F"))displayColor = Color.pink;
+		else if (stellarClass.substring(0, 1).equals("G"))displayColor =(Color.yellow);
+		else if (stellarClass.substring(0, 1).equals("K"))displayColor =(Color.orange);
+		else if (stellarClass.substring(0, 1).equals("M"))displayColor =(Color.red);
+		else if (stellarClass.substring(0, 1).equals("L"))displayColor =(Color.magenta);
+		else displayColor = (Color.yellow);
+		
 	}
 	
 	//calculate cartesian co-ords for HA Equal Area Projection
@@ -120,7 +170,7 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 
 
 		//int xcartX = (int)(x);	
-		cartX = x * 100;
+		cartX = x * SCALING_FACTOR;
 		//System.out.println("x - coord: " +cartX);
 	}
 
@@ -128,16 +178,31 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 
 		double operand1 = Math.sqrt(2)* Math.sin(Math.toRadians(dec));
 		double operand2 = Math.sqrt(1 + (Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra/2))));
-		double y = (operand1/operand2)*100;
+		double y = (operand1/operand2);//*100;
 
-		cartY = (y) * (-1);
+		cartY = (y) * (-1) * SCALING_FACTOR; 						//reflected about y-axis
 		//System.out.println("y coord: " + cartY);
+	}
+	
+	private void calcZ(){
+		
+		double z = distance * Math.cos(Math.toRadians(dec));
+		cartZ = z;
+	}
+	
+	private void setHAProjection(){
+		calcXCoord();
+		calcYCoord();
+		calcZ();
+		
+		cartX = (cartX/cartZ) * SCALING_FACTOR;
+		cartY = (cartY/cartZ) * SCALING_FACTOR;
 	}
 
 
 	private void setCylinCoord(){
 
-		double x = ra * 100;
+		double x = ra * 250;
 		cartX = (int) x;
 
 		double y = Math.tan(Math.toRadians(dec)) ;

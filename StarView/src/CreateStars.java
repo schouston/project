@@ -5,14 +5,17 @@ import java.util.Scanner;
 //class to create star objects from input text file
 public class CreateStars {
 	
-	private final String INPUT_TEXT_FILE = "processed_181closest_datawithccdm.txt";
+	private final String INPUT_TEXT_FILE = "processed_upto_50mas.txt";
 	private int id;
 	private double mag;
 	private double ra;
 	private double dec;
 	private double par;
 	private double colourInd;
-	private String specType;
+	private String specType = "Default";
+	private String ccdmID = "NA";
+	private String HDid;
+	private String HRid;
 	//private static int idcounter = 0;
 	private StarManager manager;
 	private CommonNameManager nameManager;
@@ -24,6 +27,8 @@ public class CreateStars {
 	}
 	
 	public void createHippStars(){
+		
+		int count = 0;
 		try{
 
 			FileReader reader = new FileReader(INPUT_TEXT_FILE);
@@ -38,12 +43,20 @@ public class CreateStars {
 					dec = Double.parseDouble(tokens[3]);
 					par = Double.parseDouble(tokens[4]);
 					colourInd = Double.parseDouble(tokens[5]);
-					specType = tokens[6];
-					String ccdmID = tokens[7];
-					Star newStar = new Star(id, manager.getStarViewID(), mag, ra, dec, par, colourInd, specType, ccdmID);
+				//	if (tokens.length == 7)
+					specType = tokens[6].trim();
+					//if (tokens.length == 8)
+					ccdmID = tokens[7];
+				//	}
+					HDid = tokens[8];
+					System.out.println ( tokens[8]);
+					HRid = tokens[9];
+					
+					Star newStar = new Star(id, manager.getStarViewID(), mag, ra, dec, par, colourInd, specType, ccdmID, HDid, HRid);
 					//newStar.setName();
 					manager.addStar(newStar);
-					//System.out.println ( manager.printStarData(counter));
+					count ++;
+					System.out.println ( count);
 			}
 			}
 

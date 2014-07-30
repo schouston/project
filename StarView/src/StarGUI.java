@@ -24,8 +24,8 @@ public class StarGUI extends JFrame {
 	//private CreateStars stars;
 	private StarController controller;
 	
-	final int FRAME_WIDTH = 1600;
-	final int FRAME_HEIGHT = 920;
+	final int FRAME_WIDTH = 1900;
+	final int FRAME_HEIGHT =1150;
 	
 	
 	public StarGUI(StarController c, StarManager m, DisplayPanel d){
@@ -34,7 +34,7 @@ public class StarGUI extends JFrame {
 		controller = c;
 		mainDisplay = d;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Star Test GUI");
+		setTitle("StarView GUI");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		//inputStars();
 		layoutWest();

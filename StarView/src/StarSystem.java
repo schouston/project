@@ -3,6 +3,9 @@ public class StarSystem {
 	
 	private int noStars;
 	private String ccdmID;
+	private double angSeperation;
+	private double semimajor;
+	
 	
 	
 	private Star[] systemArray;

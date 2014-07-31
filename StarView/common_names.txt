@@ -49,4 +49,7 @@ Fomalhaut	113368	3C_273	60936
 Proxima_Centauri 70890	Alpha_Centauri_B	71681
 Alpha_Centauri_A	71683	Epsilon_Eridani	16537
 Lacaille_9352	114046	Tau_Ceti	8102
-Gamma_Cephei	116727	Gliese_777	98767	
+Gamma_Cephei	116727	Gliese_777	98767
+Gliese_667C		84709	Gliese_86	10138
+Pi_Mensae	26394	HD_38858	27435
+HD_69830	40693	55_Cancri	43587

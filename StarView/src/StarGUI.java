@@ -1,5 +1,5 @@
 import java.awt.*;
-import java.awt.event.*;
+//import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -12,7 +12,7 @@ public class StarGUI extends JFrame {
 	private JTextArea dataDisplay;
 	private JLabel searchLabel, filterDistLabel, filterMagLabel;
 	public JTextField searchbox;
-	public JButton returnButton, systemButton, exoButton;
+	public JButton returnButton, systemButton, exoButton, helpButton;
 	public JComboBox<String> distBox, magBox;
 	private DisplayPanel mainDisplay;
 	
@@ -66,7 +66,7 @@ public class StarGUI extends JFrame {
 		
 		//JButton returnButton = new JButton("Centre on sun");
 		Font buttonfont = new Font("Verdana", Font.BOLD, 14);
-		JPanel buttonPanel = new JPanel(new BorderLayout());
+		JPanel buttonPanel = new JPanel(new GridLayout(4,1));
 		returnButton = new JButton("Centre Display");
 		returnButton.setFont(buttonfont);
 		returnButton.addActionListener(controller);
@@ -76,10 +76,14 @@ public class StarGUI extends JFrame {
 		exoButton = new JButton("View Planetary System");
 		exoButton.addActionListener(controller);
 		exoButton.setFont(buttonfont);
+		helpButton = new JButton("User Guide");
+		helpButton.setFont(buttonfont);
+		helpButton.addActionListener(controller);
 		///returnButton.setSize(2,2);
-		buttonPanel.add(returnButton, BorderLayout.SOUTH);
-		buttonPanel.add(systemButton, BorderLayout.NORTH);
-		buttonPanel.add(exoButton, BorderLayout.CENTER);
+		buttonPanel.add(returnButton);//, BorderLayout.SOUTH);
+		buttonPanel.add(systemButton);//, BorderLayout.NORTH);
+		buttonPanel.add(exoButton);//, BorderLayout.CENTER);
+		buttonPanel.add(helpButton);//, BorderLayout.CENTER);
 	
 		west.add(dataDisplay, BorderLayout.NORTH);
 		west.add(buttonPanel, BorderLayout.SOUTH);

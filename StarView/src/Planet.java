@@ -52,7 +52,7 @@ public void calculateRad(){
 	}
 
 	public void calculateVelocity(){
-		orbitalVelocity = ((10 * Math.PI * orbitalRad) / orbitalPeriod)/10;
+		orbitalVelocity = ((2 * Math.PI * orbitalRad) / orbitalPeriod);
 	}
 	
 	public void movePlanet(){

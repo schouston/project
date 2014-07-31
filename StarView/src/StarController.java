@@ -87,9 +87,15 @@ public class StarController implements MouseListener, ActionListener{
 	public void actionPerformed(ActionEvent e){
 
 		if (e.getSource() == gui.systemButton){
-			SystemDisplay systemDis = new SystemDisplay();				//create system display window	
+			
+			if (selectedStar.getInSystem()){
+				
+			SystemDisplay systemDis = new SystemDisplay();		
+			}		//create system display window	
+			
+			else JOptionPane.showMessageDialog(null, selectedStar.getName() + " is not in a Star System");
 		}
-
+	
 		if (e.getSource() == gui.exoButton){							//create exoplanet display window
 
 			this.processExoButton();
@@ -100,6 +106,10 @@ public class StarController implements MouseListener, ActionListener{
 			display.setcoords();
 			display.repaint();
 			gui.updateDataDisplay(-1);
+		}
+		
+		if (e.getSource() == gui.helpButton){
+			UserGuide guide = new UserGuide();
 		}
 
 		if (e.getSource() == gui.searchbox) {							//search for star

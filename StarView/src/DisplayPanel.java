@@ -70,7 +70,7 @@ public class DisplayPanel extends JPanel{
 		*/
 		
 		Graphics2D searchg = (Graphics2D) g;
-		Ellipse2D.Double searchCircle = new Ellipse2D.Double(xdisSearch - 5, ydisSearch - 5, 20, 20);
+		Ellipse2D.Double searchCircle = new Ellipse2D.Double(xdisSearch - 10, ydisSearch - 10, 20, 20);
 		searchg.setColor(Color.cyan);
 		searchg.draw(searchCircle);
 
@@ -108,7 +108,7 @@ public class DisplayPanel extends JPanel{
 			
 			//g2.setTransform(tform);
 			//g2.translate(size.width/2, size.height/2);
-			Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX() + xdis, star.getCartY() + ydis , star.getDisplaySize(), star.getDisplaySize());
+			Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX() + xdis - (star.getDisplaySize()/2), star.getCartY() + ydis - (star.getDisplaySize()/2), star.getDisplaySize(), star.getDisplaySize());
 			/*if(star.getStellarClass().substring(0, 1).equals("O")) g2.setColor(Color.blue);
 			else if (star.getStellarClass().substring(0, 1).equals("B"))g2.setColor(Color.lightGray);
 			else if (star.getStellarClass().substring(0, 1).equals("A"))g2.setColor(Color.white);

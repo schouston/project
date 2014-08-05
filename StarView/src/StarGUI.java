@@ -1,6 +1,6 @@
 import java.awt.*;
 //import java.awt.event.*;
-
+import java.awt.Toolkit;
 import javax.swing.*;
 
 
@@ -33,9 +33,16 @@ public class StarGUI extends JFrame {
 		manager = m;
 		controller = c;
 		mainDisplay = d;
+		
+		Toolkit tool = Toolkit.getDefaultToolkit();
+		int xSize = (int) tool.getScreenSize().getWidth();
+		int ySi = (int) tool.getScreenSize().getHeight();
+		setSize(xSize, ySi);
+		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("StarView GUI");
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		//pack();
+		//setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		//inputStars();
 		layoutWest();
 		layoutCentre();
@@ -96,10 +103,11 @@ public class StarGUI extends JFrame {
 		mainDisplay.addMouseListener(controller);
 		mainDisplay.setPreferredSize(new Dimension(1600, 1600));
 		
-		JScrollPane scroll = new JScrollPane(mainDisplay,  ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//JScrollPane scroll = new JScrollPane(mainDisplay,  ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
-		this.add(scroll, BorderLayout.CENTER);
+		//this.add(scroll, BorderLayout.CENTER);
 		//this.getContentPane().add(scroll);
+		this.add(mainDisplay, BorderLayout.CENTER);
 		
 		
 		//canvas.setBackground(Color.black);

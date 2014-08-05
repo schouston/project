@@ -20,10 +20,13 @@ public class DisplayPanel extends JPanel{
 
 		manager = m;
 		controller = c;
-		this.setBounds(0, 0, 1600, 1600);
+		
+		this.setBounds(0, 0, 1700, 1100);
 		this.setcoords();
 		this.setBackground(Color.black);
 		this.setLayout(null);
+		
+		
 	}
 
 	public double getXdisplacement(){ return xdis;}
@@ -35,21 +38,36 @@ public class DisplayPanel extends JPanel{
 		height = this.getHeight();
 		width = this.getWidth();
 		xdis = width/2;
-		ydis = (height/2) - 250;
-		
+		ydis = (height/2);
 		xdisSearch = xdis;
 		ydisSearch = ydis;
+		
+		
 		//System.out.println("width: " + width);
 	//	System.out.println("height: " + height);
 		//System.out.println(getSize());
 	}
+	
+	public void setCircleCoords(double x, double y){
+		
+		resetCoords();
+		xdisSearch += x;
+		ydisSearch += y;
+	}
 
-	public void resetCoords(Point2D.Double d){
+	public void resetCoords(){
 		//xdis -= d.x;
 		//ydis -= d.y;
+		xdisSearch = xdis;
+		ydisSearch = ydis;
+		//System.out.println("point xy: " + d.x + " : " + d.y);
 		
-		xdisSearch += d.x;
-		ydisSearch += d.y;
+		//double x = xdis - xdisSearch;
+		//double y = ydis - ydisSearch;
+		//System.out.println("x y dis : "+ xdis + " : " + ydis);		
+		//System.out.println("xySearch: "+xdisSearch +" : " +ydisSearch);
+		//System.out.println(" xydis - search dis: "+ x +" : " + y);
+		
 
 
 	}
@@ -68,7 +86,7 @@ public class DisplayPanel extends JPanel{
 		gs2.setColor(Color.yellow);
 		gs2.fill(sun);
 		*/
-		
+		//resetCoords(controller.getSelectedStar().getCartX(), controller.getSelectedStar().getCartY());
 		Graphics2D searchg = (Graphics2D) g;
 		Ellipse2D.Double searchCircle = new Ellipse2D.Double(xdisSearch - 10, ydisSearch - 10, 20, 20);
 		searchg.setColor(Color.cyan);
@@ -108,23 +126,15 @@ public class DisplayPanel extends JPanel{
 			
 			//g2.setTransform(tform);
 			//g2.translate(size.width/2, size.height/2);
-			Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX() + xdis - (star.getDisplaySize()/2), star.getCartY() + ydis - (star.getDisplaySize()/2), star.getDisplaySize(), star.getDisplaySize());
-			/*if(star.getStellarClass().substring(0, 1).equals("O")) g2.setColor(Color.blue);
-			else if (star.getStellarClass().substring(0, 1).equals("B"))g2.setColor(Color.lightGray);
-			else if (star.getStellarClass().substring(0, 1).equals("A"))g2.setColor(Color.white);
-			else if (star.getStellarClass().substring(0, 1).equals("F"))g2.setColor(Color.pink);
-			else if (star.getStellarClass().substring(0, 1).equals("G"))g2.setColor(Color.yellow);
-			else if (star.getStellarClass().substring(0, 1).equals("K"))g2.setColor(Color.orange);
-			else if (star.getStellarClass().substring(0, 1).equals("M"))g2.setColor(Color.red);
-			else if (star.getStellarClass().substring(0, 1).equals("L"))g2.setColor(Color.magenta);
-			else g2.setColor(Color.yellow);*/
+			Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX() + xdis - (star.getCartZ()/2), star.getCartY() + ydis - (star.getCartZ()/2), star.getCartZ(), star.getCartZ());
 			g2.setColor(star.getDisplayColor());
 			g2.fill(point);
 			
 			if (star.getCommonNameBool())
 				g2.drawString(star.getName(), (int) (star.getCartX() + xdis + 5), (int) (star.getCartY() + ydis + 5));
+			
 		}
-		setcoords();
+		
 	}
 	
 }

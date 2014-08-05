@@ -26,13 +26,18 @@ public class StarController implements MouseListener, ActionListener{
 	public StarController(StarManager m){
 
 		manager = m;
+		selectedStar = manager.getStarArray()[0];
 		display = new DisplayPanel(manager, this);
+		
+				
 		gui = new StarGUI(this, manager, display);
 		gui.setVisible(true);
 		filterFlag = 0;
 		//canvas = c;
 		//display = d;
 	}
+	
+	public Star getSelectedStar(){return selectedStar;}
 
 	public void mousePressed(MouseEvent e){
 
@@ -40,30 +45,34 @@ public class StarController implements MouseListener, ActionListener{
 
 	public void mouseClicked(MouseEvent e){
 
-		if ( e.getX() >= display.getXdisplacement()-5  && e.getX() <= display.getXdisplacement()+5 && e.getY() >= display.getYdisplacement()-5 
-				&& e.getY() <= display.getYdisplacement()+5 )
-			gui.updateDataDisplay(-1);
-		else{
+		//if ( e.getX() >= display.getXdisplacement()-5  && e.getX() <= display.getXdisplacement()+5 && e.getY() >= display.getYdisplacement()-5 
+			//	&& e.getY() <= display.getYdisplacement()+5 )
+		//	gui.updateDataDisplay(-1);
+	//	else{
 			Star [] stars = manager.getStarArray();
 
 			for (int i = 0; i < stars.length; i++){	
 				double x = stars[i].getCartX() + ( display.getXdisplacement());
 				double y = stars[i].getCartY() + (display.getYdisplacement());
+				
 				if ( e.getX() >= x-2  && e.getX() <= x+2 && e.getY() >= y-2 && e.getY() <= y+2 ){
-
 					//if (e.getX() == stars[i].getCartX() && e.getY() == stars[i].getCartY()){
 					//System.out.println("hit");
-					gui.updateDataDisplay(i);
-					selectedStar = stars[i];
 					Point2D.Double point = new Point2D.Double(stars[i].getCartX(), stars[i].getCartY());
-					display.resetCoords(point);
+					//System.out.println(point);
+					display.setCircleCoords(stars[i].getCartX(), stars[i].getCartY());
+					selectedStar = stars[i];
 					display.repaint();
+					gui.updateDataDisplay(i);
+					
+					
+					
 					
 					//display.resetCoords(d);
 				}
 			}
 
-		}
+		//}
 		//System.out.println(stars[0].getCartX());
 		//System.out.println(e.getX());
 		//System.out.println(stars[0].getCartY());
@@ -117,7 +126,8 @@ public class StarController implements MouseListener, ActionListener{
 			Point2D.Double point = manager.searchStarArray(gui.searchbox.getText().trim());
 			gui.searchbox.setText("");
 
-			display.resetCoords(point);
+			display.setCircleCoords(point.x , point.y);
+			System.out.println("points from controller: " + point.x +" : " + point.y);
 			display.repaint();
 			gui.updateDataDisplay(manager.getSearchIndex());
 			selectedStar = manager.getStarArray()[manager.getSearchIndex()];

@@ -10,7 +10,7 @@ public class Star {
 	private int starViewID;									//unique starview id
 
 	private String name;									//
-	private int idNum;									//hipparcos id
+	private int idNum;										//hipparcos id
 	private double distance;								//distance from sun in pc
 	private double apMag;									//apparent (V-band) magnitude
 	private double abMag;									//absolute magnitude
@@ -26,7 +26,7 @@ public class Star {
 	private double cartZ;
 	private double colourIndex;								//b-v colour index to calculate temperature
 	private Color displayColor;
-	private double parallax; 								//milli arc seconds
+	private double parallax; 								//milli-arc seconds
 	
 	private String ccdmID = "0";
 	private boolean hasCommonName;
@@ -75,6 +75,7 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		//setCylinCoord();
 		calcXCoord();
 		calcYCoord();
+		z();
 		//setCartesian();
 		setDisplayColor();
 	}
@@ -94,6 +95,9 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	public boolean inExoSystem(){return exoSystem;}
 	public double getCartX(){return cartX;}
 	public double getCartY(){return cartY;}
+	
+	public double getCartZ(){return cartZ;}
+	
 	public double getcolourIndex(){return colourIndex;}
 	public Color getDisplayColor(){return displayColor;}
 	public String getHDid(){return HDid;}
@@ -123,6 +127,18 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 
 		double paraAS = parallax/1000;
 		distance = 1/(paraAS);
+	}
+	
+	//method to calc z component - display range ie size for each unit of distance, then multiply be the maxdistance minus actual distance
+	private void z(){
+		
+		int minSize = 2; 								// minimum display size, ie furtheset will be 2 pixels wide
+		
+		double displayRange = 5;						//range of display values
+		double distanceRange;							
+		distanceRange = 20;
+		double displayRatio = displayRange/distanceRange;
+		cartZ = displayRatio * (distanceRange -distance) + minSize;
 	}
 	
 	private void setDisplaySize(){
@@ -195,8 +211,8 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		calcYCoord();
 		calcZ();
 		
-		cartX = (cartX/cartZ) * SCALING_FACTOR;
-		cartY = (cartY/cartZ) * SCALING_FACTOR;
+		cartX = (cartX) * SCALING_FACTOR;
+		cartY = (cartY) * SCALING_FACTOR;
 	}
 
 

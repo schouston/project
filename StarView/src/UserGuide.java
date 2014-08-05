@@ -12,6 +12,7 @@ public class UserGuide extends JFrame{
 
 		setTitle("StarView User Guide");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		this.setLocationByPlatform(true);
 		this.add(ugString());
 		this.setVisible(true);
 

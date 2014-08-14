@@ -4,8 +4,8 @@ import java.util.*;
 
 public class HippDataIn {
 
-	private final String IN_FILE = "upto_para_50mas.txt";//"hipp.txt";
-	private final String OUT_FILE = "processed_upto_50mas.txt";
+	private final String IN_FILE = "hippcat11000entries.txt"; //"upto_para_50mas.txt";//"hipp.txt";
+	private final String OUT_FILE = "processed_upto_20mas.txt";
 	private final double MIN_PARALLAX = 9;
 	private int id;
 	private double mag;
@@ -31,6 +31,7 @@ public class HippDataIn {
 	}
 
 	public void readInFile(){
+		int counter = 0;
 
 		try{
 			FileReader reader = new FileReader(IN_FILE);
@@ -87,6 +88,8 @@ public class HippDataIn {
 						String output = String.format("%s, %f, %f, %f, %f, %f, %s,%s,%s,%s,", id, mag, ra, dec, par, colourInd, specType, ccdmID, HDid, HRid);
 						out.write(output + '\n');
 						//out.write(id + ", " + mag + ", " + ra + ", " + dec + ", " + par + ", " + colourInd + ", " + specType + ", " + "\n");
+						System.out.println(counter);
+						counter ++;
 					}
 					HDid = "0";
 					HRid= "0";

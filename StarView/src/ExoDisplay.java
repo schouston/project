@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 
 public class ExoDisplay extends JPanel{
 
-	private int FRAME_WIDTH = 600;
+	/*private int FRAME_WIDTH = 600;
 	private int FRAME_HEIGHT = 600;
 	
 	private ExoManager exoManager;
@@ -47,5 +47,5 @@ public void paintComponent(Graphics g){
 		g2.fillOval((int)planet.getPosition().getX(),(int) planet.getPosition().getY(), (int)planet.getPlanetaryRad(), (int)planet.getPlanetaryRad());
 	}
 		
-	}
+	}*/
 }

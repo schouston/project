@@ -16,12 +16,13 @@ public class ExoManager extends JPanel{
 
 		planetDisplayArray = pa; //new Planet[SIZE];
 		displayStar = s;
-		xLeft = 200;
-		yTop = 200;
+		xLeft = 500;//this.getWidth()/2;
+		yTop = 500;//this.getHeight()/2;
 		this.setBackground(Color.black);
-		System.out.println(planetDisplayArray.length);
-		System.out.println(planetDisplayArray[0].getName());
-		System.out.println(planetDisplayArray[0].getPlanetaryRad());
+		//System.out.println(planetDisplayArray.length);
+		//System.out.println(planetDisplayArray[0].getName());
+		System.out.println(xLeft);
+		System.out.println(yTop);
 		this.movePlanets();
 	}
 
@@ -60,15 +61,17 @@ public class ExoManager extends JPanel{
 
 		Graphics2D star = (Graphics2D) g;
 		star.setColor(displayStar.getDisplayColor());
-		star.fillOval(xLeft, yTop, 5, 5);
+		star.fillOval(xLeft - 50/2, yTop - 50/2, 50,50);
+
+		//star.fillOval(xLeft - planetDisplayArray[0].getParentRadius()/2, yTop - planetDisplayArray[0].getParentRadius()/2, planetDisplayArray[0].getParentRadius(), planetDisplayArray[0].getParentRadius());
 
 		for (Planet planet : planetDisplayArray){
 			//System.out.println(planet.getName());
 
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(Color.green);
-			g2.fillOval((int)planet.getPosition().getX(),(int) planet.getPosition().getY(), (int)planet.getPlanetaryRad(), (int)planet.getPlanetaryRad());
-			g2.drawString(planet.getName(), ((int)planet.getPosition().getX() + 5), (int) (planet.getPosition().getY()+ 5));
+			g2.fillOval((int)planet.getPosition().getX() + xLeft,(int) planet.getPosition().getY() + yTop, (int)planet.getPlanetaryRad(), (int)planet.getPlanetaryRad());
+			g2.drawString(planet.getName(), ((int)planet.getPosition().getX()+ xLeft + 5), (int) (planet.getPosition().getY()+ yTop + 5));
 		}
 
 	}
@@ -84,9 +87,10 @@ public class ExoManager extends JPanel{
 			String name = "Name: ";
 			String dDate = "Discovered: ";
 			String dMethod = "Discovery Method:";
+			String starScale = "star scale: ";
 
 
-			String data = String.format("%s%s" + '\n' + "%s%d" + '\n' + "%s" +'\n' +"%s" + '\n' ,name, planet.getName(), dDate, planet.getDisDate(), dMethod, planet.getDisMeth().trim());
+			String data = String.format("%s%s" + '\n' + "%s%d" + '\n' + "%s" +'\n' +"%s" + '\n' + "%s%f" ,name, planet.getName(), dDate, planet.getDisDate(), dMethod, planet.getDisMeth().trim(), starScale, planet.getStarScaleFactor());
 			planetData += data + '\n';
 		}
 		//System.out.println(planetData);	

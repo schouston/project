@@ -5,8 +5,8 @@ import javax.swing.*;
 
 public class ExoFrame extends JFrame{
 	
-	private int FRAME_WIDTH = 700;
-	private int FRAME_HEIGHT = 500;
+	private int FRAME_WIDTH = 900;
+	private int FRAME_HEIGHT = 700;
 	
 	private ExoManager scene;
 	private Planet plan;
@@ -45,7 +45,7 @@ public class ExoFrame extends JFrame{
 		infoPanel();
 		ActionListener listener = new TimerListener();
 		
-		int DELAY = 10;
+		int DELAY = 100;
 		Timer t = new Timer(DELAY, listener);
 		t.start();
 	}

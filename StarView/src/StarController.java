@@ -7,6 +7,9 @@ import javax.swing.JOptionPane;
 //class to listen for events. also creates gui object
 public class StarController implements MouseListener, ActionListener{
 
+	private final int MAX_DIST = 50;				//Maximum distance for filter
+	private final int MAX_MAG = 13;					//Maximum magnitude for filter
+
 	private StarManager manager;
 	private StarGUI gui;
 	//private StarCanvas canvas;
@@ -16,8 +19,8 @@ public class StarController implements MouseListener, ActionListener{
 	private boolean magFilterBoolean = false;
 
 	private int filterFlag;			//0 no filter, 1 dist filter, 2 mag filter
-	private int distFilterInt;		//integer to pass as parameter for distance filter
-	private int magFilterInt;		//integer to pass as parameter for magnitude filter
+	private int distFilterInt = 25;		//integer to pass as parameter for distance filter
+	private int magFilterInt = 13;		//integer to pass as parameter for magnitude filter
 
 	private CreatePlanets createP;
 	private boolean planetsDone = false;
@@ -28,15 +31,15 @@ public class StarController implements MouseListener, ActionListener{
 		manager = m;
 		selectedStar = manager.getStarArray()[0];
 		display = new DisplayPanel(manager, this);
-		
-				
+
+
 		gui = new StarGUI(this, manager, display);
 		gui.setVisible(true);
 		filterFlag = 0;
 		//canvas = c;
 		//display = d;
 	}
-	
+
 	public Star getSelectedStar(){return selectedStar;}
 
 	public void mousePressed(MouseEvent e){
@@ -46,31 +49,31 @@ public class StarController implements MouseListener, ActionListener{
 	public void mouseClicked(MouseEvent e){
 
 		//if ( e.getX() >= display.getXdisplacement()-5  && e.getX() <= display.getXdisplacement()+5 && e.getY() >= display.getYdisplacement()-5 
-			//	&& e.getY() <= display.getYdisplacement()+5 )
+		//	&& e.getY() <= display.getYdisplacement()+5 )
 		//	gui.updateDataDisplay(-1);
-	//	else{
-			Star [] stars = manager.getStarArray();
+		//	else{
+		Star [] stars = manager.getStarArray();
 
-			for (int i = 0; i < stars.length; i++){	
-				double x = stars[i].getCartX() + ( display.getXdisplacement());
-				double y = stars[i].getCartY() + (display.getYdisplacement());
-				
-				if ( e.getX() >= x-2  && e.getX() <= x+2 && e.getY() >= y-2 && e.getY() <= y+2 ){
-					//if (e.getX() == stars[i].getCartX() && e.getY() == stars[i].getCartY()){
-					//System.out.println("hit");
-					Point2D.Double point = new Point2D.Double(stars[i].getCartX(), stars[i].getCartY());
-					//System.out.println(point);
-					display.setCircleCoords(stars[i].getCartX(), stars[i].getCartY());
-					selectedStar = stars[i];
-					display.repaint();
-					gui.updateDataDisplay(i);
-					
-					
-					
-					
-					//display.resetCoords(d);
-				}
+		for (int i = 0; i < stars.length; i++){	
+			double x = stars[i].getCartX() + ( display.getXdisplacement());
+			double y = stars[i].getCartY() + (display.getYdisplacement());
+
+			if ( e.getX() >= x-2  && e.getX() <= x+2 && e.getY() >= y-2 && e.getY() <= y+2 ){
+				//if (e.getX() == stars[i].getCartX() && e.getY() == stars[i].getCartY()){
+				//System.out.println("hit");
+				Point2D.Double point = new Point2D.Double(stars[i].getCartX(), stars[i].getCartY());
+				//System.out.println(point);
+				display.setCircleCoords(stars[i].getCartX(), stars[i].getCartY());
+				selectedStar = stars[i];
+				display.repaint();
+				gui.updateDataDisplay(i);
+
+
+
+
+				//display.resetCoords(d);
 			}
+		}
 
 		//}
 		//System.out.println(stars[0].getCartX());
@@ -96,44 +99,50 @@ public class StarController implements MouseListener, ActionListener{
 	public void actionPerformed(ActionEvent e){
 
 		if (e.getSource() == gui.systemButton){
-			
+
 			if (selectedStar.getInSystem()){
-				
-			SystemDisplay systemDis = new SystemDisplay();		
+
+				SystemDisplay systemDis = new SystemDisplay();		
 			}		//create system display window	
-			
+
 			else JOptionPane.showMessageDialog(null, selectedStar.getName() + " is not in a Star System");
 		}
-	
-		if (e.getSource() == gui.exoButton){							//create exoplanet display window
+
+		else if (e.getSource() == gui.exoButton){							//create exoplanet display window
 
 			this.processExoButton();
 
 		}
 
-		if (e.getSource() == gui.returnButton){							//return main display to 0
+		else if (e.getSource() == gui.returnButton){							//return main display to 0
 			display.setcoords();
 			display.repaint();
 			gui.updateDataDisplay(-1);
 		}
-		
-		if (e.getSource() == gui.helpButton){
+
+		else if (e.getSource() == gui.helpButton){
 			UserGuide guide = new UserGuide();
 		}
 
-		if (e.getSource() == gui.searchbox) {							//search for star
+		else	if (e.getSource() == gui.searchbox) {							//search for star
 			//manager.searchStarArray(gui.searchbox.getText().trim());
-			Point2D.Double point = manager.searchStarArray(gui.searchbox.getText().trim());
+			String searchName = gui.searchbox.getText().trim();
+			Point2D.Double point = manager.searchStarArray(searchName);
 			gui.searchbox.setText("");
 
-			display.setCircleCoords(point.x , point.y);
-			System.out.println("points from controller: " + point.x +" : " + point.y);
-			display.repaint();
-			gui.updateDataDisplay(manager.getSearchIndex());
-			selectedStar = manager.getStarArray()[manager.getSearchIndex()];
+			if(manager.searchBool){
+
+				display.setCircleCoords(point.x , point.y);
+				System.out.println("points from controller: " + point.x +" : " + point.y);
+				display.repaint();
+				gui.updateDataDisplay(manager.getSearchIndex());
+				selectedStar = manager.getStarArray()[manager.getSearchIndex()];}
+
+			else
+				JOptionPane.showMessageDialog(null, searchName + " could not be found");
 		}
 
-		if (e.getSource() == gui.distBox){							//distance filter
+		else if (e.getSource() == gui.distBox){							//distance filter
 
 			filterFlag = 1;
 			//manager.filterSelected = true;
@@ -142,8 +151,14 @@ public class StarController implements MouseListener, ActionListener{
 				distFilterInt = 5;
 			else if(selectedString.equals("upto 7pc"))
 				distFilterInt = 7;
+			else if(selectedString.equals("upto 10pc"))
+				distFilterInt = 10;
+			else if(selectedString.equals("upto 20pc"))
+				distFilterInt = 20;
+			else if(selectedString.equals("upto 30pc"))
+				distFilterInt = 30;
 			else 
-				filterFlag = 0;
+				distFilterInt = MAX_DIST;
 
 			//filtArray = manager.getDistanceFilterArray(1);
 			//	if(selectedString.equals("upto 10"))
@@ -153,17 +168,36 @@ public class StarController implements MouseListener, ActionListener{
 			//manager.filterSelected = false;
 		}
 
-		if (e.getSource() == gui.magBox){										//magnitude filter
+		else	if (e.getSource() == gui.magBox){										//magnitude filter
 			filterFlag = 2;
 			String selectedString = (String) gui.magBox.getSelectedItem();
-			if(selectedString.equals("upto 7"))
+			if(selectedString.equals("upto 10"))
+				magFilterInt = 10;
+			else if(selectedString.equals("upto 7"))
 				magFilterInt = 7;
 			else if(selectedString.equals("upto 3"))
 				magFilterInt = 3;
 			else 
-				filterFlag = 0;
+				magFilterInt = MAX_MAG;
 
 			display.repaint();
+
+		}
+
+		else if(e.getSource() == gui.projBox){
+
+			String selectedString = (String) gui.projBox.getSelectedItem();
+
+
+			Star [] stars = manager.getStarArray();
+
+			for (int i = 0; i < stars.length; i++){	
+				if(selectedString.equals("Hammer-Aitoff"))stars[i].setHAProjection();
+				else if (selectedString.equals("Mercator"))stars[i].setMetProj();
+				else if (selectedString.equals("Cylindrical Equal Area"))stars[i].setCylinProj();
+				else if (selectedString.equals("Orthographic"))stars[i].setOAProj();
+				display.repaint();
+			}
 
 		}
 

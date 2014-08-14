@@ -10,7 +10,7 @@ public class SystemDataIn {
 		
 	}
 
-	public void readInFile(){
+/*	public void readInFile(){
 
 		try{
 			FileReader reader = new FileReader(IN_FILE);
@@ -82,6 +82,6 @@ public class SystemDataIn {
 		}
 		
 		
-	}
+	}*/
 
 }

@@ -27,12 +27,12 @@ public class CommonNameProcessor {
 			try{				
 				while (in.hasNextLine()){
 					String line = in.nextLine();
-					String [] tokens = line.split("\\s+");
+					String [] tokens = line.split("[,]");
 					System.out.println(tokens.length);
 					//System.out.println(tokens[76]);
-					String name1 = tokens[0];
+					String name1 = tokens[0].trim();
 					int id1 = Integer.parseInt(tokens[1]);
-					String name2 = tokens[2];
+					String name2 = tokens[2].trim();
 					int id2 = Integer.parseInt(tokens[3]);
 					CommonName nameObject1 = new CommonName(name1, id1);
 					CommonName nameObject2 = new CommonName(name2, id2);

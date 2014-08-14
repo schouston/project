@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class CreatePlanets {
 	
 	private final String INPUT_TEXT_FILE = "processed_exo2.txt";
-	private final int SIZE = 841;
+	private final int SIZE = 1761;
 	private Planet[] planetArray; 
 	private static int arrayCounter = 0;
 	private boolean planetsCreated = false;
@@ -37,8 +37,9 @@ public class CreatePlanets {
 					int disDate = Integer.parseInt(tokens[5]);
 					String disMeth = tokens[6].trim();
 					String parentStar = tokens[7].trim();
+					double parentRad = Double.parseDouble(tokens[8].trim());
 					
-					Planet planet = new Planet(name, planRad, smAxis, period, ecc, disDate, disMeth, parentStar);
+					Planet planet = new Planet(name, planRad, smAxis, period, ecc, disDate, disMeth, parentStar, parentRad);
 					planetArray[arrayCounter] = planet;
 					//System.out.println(planetArray[arrayCounter].getName());
 					arrayCounter ++;	

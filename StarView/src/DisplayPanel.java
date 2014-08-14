@@ -21,10 +21,13 @@ public class DisplayPanel extends JPanel{
 		manager = m;
 		controller = c;
 		
-		this.setBounds(0, 0, 1700, 1100);
+		this.setBounds(0, 0, 1700, 1000);
 		this.setcoords();
+		
 		this.setBackground(Color.black);
+		this.repaint();
 		this.setLayout(null);
+		
 		
 		
 	}
@@ -43,8 +46,8 @@ public class DisplayPanel extends JPanel{
 		ydisSearch = ydis;
 		
 		
-		//System.out.println("width: " + width);
-	//	System.out.println("height: " + height);
+		System.out.println("width: " + width);
+	System.out.println("height: " + height);
 		//System.out.println(getSize());
 	}
 	
@@ -95,7 +98,7 @@ public class DisplayPanel extends JPanel{
 		//AffineTransform tform = AffineTransform.getTranslateInstance(width/2, height);
 		
 		if(controller.getFilterFlag() == 1){
-			drawArray = manager.getDistanceFilterArray(controller.getDistFilterInt());
+			drawArray = manager.getFilterArray(controller.getDistFilterInt(), controller.getMagFilterInt());
 			//System.out.println(drawArray);
 			//System.out.println(drawArray.length);
 		//	System.out.println(drawArray[0].getName());
@@ -105,7 +108,8 @@ public class DisplayPanel extends JPanel{
 			//manager.filterSelected = false;
 		}
 		else if(controller.getFilterFlag() == 2){
-			drawArray = manager.getMagFilterArray(controller.getMagFilterInt());
+			System.out.println("HERE");
+			drawArray = manager.getFilterArray(controller.getDistFilterInt(), controller.getMagFilterInt());
 			//System.out.println(drawArray);
 			//System.out.println(drawArray.length);
 			//System.out.println(drawArray[0].getName());
@@ -126,6 +130,7 @@ public class DisplayPanel extends JPanel{
 			
 			//g2.setTransform(tform);
 			//g2.translate(size.width/2, size.height/2);
+			//System.out.println("HERE IN DRAW");
 			Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX() + xdis - (star.getCartZ()/2), star.getCartY() + ydis - (star.getCartZ()/2), star.getCartZ(), star.getCartZ());
 			g2.setColor(star.getDisplayColor());
 			g2.fill(point);

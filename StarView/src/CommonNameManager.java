@@ -27,13 +27,13 @@ public class CommonNameManager {
 			try{				
 				while (in.hasNextLine()){
 					String line = in.nextLine();
-					String [] tokens = line.split("\\s+");
+					String [] tokens = line.split("[,]");
 					System.out.println(tokens.length);
 					//System.out.println(tokens[76]);
-					String name1 = tokens[0];
-					int id1 = Integer.parseInt(tokens[1]);
-					String name2 = tokens[2];
-					int id2 = Integer.parseInt(tokens[3]);
+					String name1 = tokens[0].trim();
+					int id1 = Integer.parseInt(tokens[1].trim());
+					String name2 = tokens[2].trim();
+					int id2 = Integer.parseInt(tokens[3].trim());
 					CommonName nameObject1 = new CommonName(name1, id1);
 					CommonName nameObject2 = new CommonName(name2, id2);
 					this.putName(nameObject1);
@@ -69,7 +69,7 @@ public class CommonNameManager {
 				star.setCommonNameBoole(true);
 			}
 			else
-				star.setName("hippID_" + Integer.toString(star.getID()));
+				star.setName("HIP " + Integer.toString(star.getID()));
 		}
 	}
 

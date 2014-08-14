@@ -4,7 +4,7 @@ public class Star {
 
 	private final double TEMP_CONSTANT_A = 14.551;			//constants used in setTemperature method
 	private final double TEMP_CONSTANT_B = 3.684;			//
-	private final double SCALING_FACTOR = 280;				//scaling factor for co-ordinates
+	private  double SCALING_FACTOR = 280;				//scaling factor for co-ordinates ***200 for ha laptop
 	//private static int iDCounter = 0;						//static variable counter for unique id
 
 	private int starViewID;									//unique starview id
@@ -67,16 +67,22 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		HDid = hd;
 		HRid = hr;
 		
-		setAbsMag();
 		setDistance();
+		setAbsMag();
 		setDisplaySize();
 		setTemp();
+		
 		//setHAProjection();
-		//setCylinCoord();
-		calcXCoord();
-		calcYCoord();
-		z();
+		//setCylinProj();
+		setLAEqualArea();
+		//setOAProj();
+		//calcXCoord();
+		//calcYCoord();
+		//z();
 		//setCartesian();
+		//setMetProj();
+		
+		calcZCoord();
 		setDisplayColor();
 	}
 
@@ -130,13 +136,13 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	}
 	
 	//method to calc z component - display range ie size for each unit of distance, then multiply be the maxdistance minus actual distance
-	private void z(){
+	private void calcZCoord(){
 		
-		int minSize = 2; 								// minimum display size, ie furtheset will be 2 pixels wide
+		int minSize = 1; 								// minimum display size, ie furthest will be 2 pixels wide
 		
-		double displayRange = 5;						//range of display values
+		double displayRange = 6;						//range of display values
 		double distanceRange;							
-		distanceRange = 20;
+		distanceRange = 40;
 		double displayRatio = displayRange/distanceRange;
 		cartZ = displayRatio * (distanceRange -distance) + minSize;
 	}
@@ -154,8 +160,9 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	private void setAbsMag(){
 
 		double paraAS = parallax/1000;
-		double x = paraAS/100;
-		abMag =  5*(Math.log(x));
+		//double x = paraAS/100;
+		//abMag = apMag + (5*(1 + Math.log10(paraAS)));
+		abMag = apMag + 5 - (5*(Math.log10(distance)));
 	}
 	
 	private void setDisplayColor(){
@@ -173,7 +180,7 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	}
 	
 	//calculate cartesian co-ords for HA Equal Area Projection
-	private void calcXCoord(){
+	private void calcHAXCoord(){
 
 		double operand1 = 2 * (Math.sqrt(2))* (Math.cos(Math.toRadians(dec))) * (Math.sin(Math.toRadians(ra/2)));
 		double operand2 = Math.sqrt(1 + (Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra/2))));
@@ -190,7 +197,7 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		//System.out.println("x - coord: " +cartX);
 	}
 
-	private void calcYCoord(){
+	private void calcHAYCoord(){
 
 		double operand1 = Math.sqrt(2)* Math.sin(Math.toRadians(dec));
 		double operand2 = Math.sqrt(1 + (Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra/2))));
@@ -206,36 +213,91 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		cartZ = z;
 	}
 	
-	private void setHAProjection(){
-		calcXCoord();
-		calcYCoord();
-		calcZ();
+	public void setHAProjection(){
+		SCALING_FACTOR = 280;
+		calcHAXCoord();
+		calcHAYCoord();
+		//calcZCoord();
 		
-		cartX = (cartX) * SCALING_FACTOR;
-		cartY = (cartY) * SCALING_FACTOR;
+		//cartX = (cartX) * SCALING_FACTOR;
+		//cartY = (cartY) * SCALING_FACTOR;
 	}
 
 
-	private void setCylinCoord(){
+	public void setCylinProj(){    //Lamberts Cylindical Equal Area
 
-		double x = ra * 250;
-		cartX = (int) x;
+		double x = ra * 4;
+		cartX =  x ;
+		
+		double y = Math.sin(Math.toRadians(dec));
 
-		double y = Math.tan(Math.toRadians(dec)) ;
-		cartY = (int) y;
+	//	double y = Math.tan(Math.toRadians(dec)) * -20;//SCALING_FACTOR ;
+		cartY =  y * -400;
+		
+		//calcZCoord();
 	}
 
 	private void setCartesian(){
 		
 		double x = distance * Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra));
-		cartX = x * 50;
+		
 		
 		double y = distance * Math.cos(Math.toRadians(dec)) * Math.sin(Math.toRadians(ra));
-		cartY = y * 50;
-		double z = distance * Math.sin(Math.toRadians(dec));
 		
-		//cartX = (x/z) * 100;
-		//cartY = (y/z)  * 100;
+		//double z = distance * Math.sin(Math.toRadians(dec));
+		SCALING_FACTOR = 20;
+		
+		cartX = x *SCALING_FACTOR;
+		cartY = y *SCALING_FACTOR;
+		//calcZCoord();
+	}
+	
+	public void setLAEqualArea(){
+		
+		double kdivisor = 1 + Math.cos(0)* Math.cos(dec) * Math.cos(ra) ;
+		
+		double k = Math.sqrt(2/kdivisor);
+		
+		double x = k * Math.cos(Math.toRadians(dec))*Math.sin(Math.toRadians(ra));
+		double y = k * Math.sin(Math.toRadians(dec));
+		
+		cartX =  x * 10;//SCALING_FACTOR;
+		cartY =  y * 10; //SCALING_FACTOR;
+		
+		//calcZCoord();
+	}
+	
+	public void setOAProj(){
+		
+		//if (ra < 0) ra = ra + 360;
+		SCALING_FACTOR = 380;
+		
+		double x = Math.cos(Math.toRadians(dec)) * Math.sin(Math.toRadians(ra));
+		double y = Math.sin(Math.toRadians(dec)) ;
+		if (ra < 0){
+			if (ra > -90) cartX = x * SCALING_FACTOR  + 800 - 400;			//ra between 0 and -90
+			else
+			cartX =  x * SCALING_FACTOR  - 400;							//ra between -90 and -180
+		}
+		
+		else {
+			if (ra < 90)											//ra between 0 and 90
+			cartX =  x * SCALING_FACTOR + 400;
+		else cartX = x * SCALING_FACTOR - 800 + 400;				// ra betwwn 90 and 180
+		}
+		cartY =  y * - SCALING_FACTOR;
+	}
+	
+	//Mercator
+	public void setMetProj(){
+		
+		//if (dec < 0) dec = 180 - dec;
+		double y2 = 1700 / (2* Math.PI) * Math.log(Math.tan((Math.PI / 4) + (Math.toRadians(dec)/2)));
+		double y1 = Math.tan(Math.toRadians(dec)) * ( 1/ Math.cos(Math.toRadians(dec)));
+		double y = Math.log(y1);
+		
+		cartX = ra * 4;//SCALING_FACTOR;
+		cartY = y2 / -2; //SCALING_FACTOR;
 	}
 
 

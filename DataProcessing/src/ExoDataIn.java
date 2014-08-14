@@ -11,10 +11,11 @@ public class ExoDataIn {
 	}
 
 	public void readInExoData(){
-		Double pRad = 0.0;
-		Double period = 0.0;
-		Double ecc = 0.0;
-		Double smA = 0.0;
+		double pRad = 0.0;
+		double period = 0.0;
+		double ecc = 0.0;
+		double smA = 0.0;
+		double starRadi = 0.0;
 
 		try{
 			FileReader reader = new FileReader(IN_FILE);
@@ -44,8 +45,11 @@ public class ExoDataIn {
 							String disDate = tokens[37].trim();
 							String disMethod = tokens[45].trim();
 							String starName = tokens[48];
+							
+							if (!tokens[59].equals("")){
+								starRadi = Double.parseDouble(tokens[59]);}
 
-							String output = String.format("%s, %f, %f, %f, %f,%s,%s,%s,", name, pRad, period, smA, ecc, disDate, disMethod, starName);
+							String output = String.format("%s, %f, %f, %f, %f,%s,%s,%s,%f", name, pRad, period, smA, ecc, disDate, disMethod, starName, starRadi);
 							out.write(output + '\n');
 
 						//}	

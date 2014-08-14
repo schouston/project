@@ -10,10 +10,10 @@ public class StarGUI extends JFrame {
 	private JPanel west, centre, south;
 	//private StarCanvas canvas;
 	private JTextArea dataDisplay;
-	private JLabel searchLabel, filterDistLabel, filterMagLabel;
+	private JLabel searchLabel, filterDistLabel, filterMagLabel, projectionLabel;
 	public JTextField searchbox;
 	public JButton returnButton, systemButton, exoButton, helpButton;
-	public JComboBox<String> distBox, magBox;
+	public JComboBox<String> distBox, magBox, projBox;
 	private DisplayPanel mainDisplay;
 	
 	public JMenu distMenu;
@@ -103,11 +103,11 @@ public class StarGUI extends JFrame {
 		mainDisplay.addMouseListener(controller);
 		mainDisplay.setPreferredSize(new Dimension(1600, 1600));
 		
-		//JScrollPane scroll = new JScrollPane(mainDisplay,  ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		JScrollPane scroll = new JScrollPane(mainDisplay,  ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
-		//this.add(scroll, BorderLayout.CENTER);
+		this.add(scroll, BorderLayout.CENTER);
 		//this.getContentPane().add(scroll);
-		this.add(mainDisplay, BorderLayout.CENTER);
+		//this.add(mainDisplay, BorderLayout.CENTER);
 		
 		
 		//canvas.setBackground(Color.black);
@@ -143,6 +143,9 @@ public class StarGUI extends JFrame {
 		filterDistLabel = new JLabel("Filter by distance");
 		filterDistLabel.setFont(font);
 		filterDistLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		projectionLabel = new JLabel("Projection Type");
+		projectionLabel.setFont(font);
+		projectionLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		JLabel blank = new JLabel("");
 		JLabel blank1 = new JLabel("");
 		filterMagLabel = new JLabel("Filter by magnitude");
@@ -155,24 +158,31 @@ public class StarGUI extends JFrame {
 		distMenu.add(ten);
 		distMenu.add(five);*/
 		
-		String [] filtDStrings = { "all", "upto 5pc", "upto 7pc"};
+		String [] filtDStrings = { "all", "upto 5pc", "upto 7pc", "upto 10pc", "upto 20pc", "upto 30pc"};
 		distBox = new JComboBox<String>(filtDStrings);
 		distBox.addActionListener(controller);
 		//distBox.addItem("up to 5");
 		//distBox.addItem("up to 10");
-		String [] filtMStrings = {"all", "upto 7", "upto 3"};
+		String [] filtMStrings = {"all","upto 10", "upto 7", "upto 3"};
 		magBox = new JComboBox<String>(filtMStrings);
 		magBox.addActionListener(controller);
 		//magBox.addItem("upto 10");
 		//magBox.addItem("upto 20");
+		String [] projStrings = { "Hammer-Aitoff", "Mercator", "Cylindrical Equal Area", "Orthographic"};
+		projBox = new JComboBox<String>(projStrings);
+		projBox.addActionListener(controller);
 		south.add(searchLabel);
-		south.add(blank);
+		south.add(projectionLabel);
+		//south.add(blank);
+		
 		south.add(filterDistLabel);
-		//south.add(distMenu);
-		south.add(distBox);
-		south.add(searchbox);
-		south.add(blank1);
 		south.add(filterMagLabel);
+		//south.add(distMenu);
+		
+		south.add(searchbox);
+		south.add(projBox);
+		//south.add(blank1);
+		south.add(distBox);
 		south.add(magBox);
 		
 		this.add(south, BorderLayout.SOUTH);

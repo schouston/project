@@ -15,6 +15,7 @@ public class Planet {
 	private Point2D.Double position;
 	private Star parentStar;
 	private String parentName;
+	private double parentRadius;
 	private int discoveryDate;
 	private String discoveryMethod;
 	
@@ -25,23 +26,34 @@ public class Planet {
 	private int yTop; //centre
 	
 	
-	public Planet(String n, double pr, double or, double op, double e, int d, String m,String pn){
+	public Planet(String n, double pr, double or, double op, double e, int d, String m,String pn, double parR){
 		
 		name = n;
 		planetaryRad = pr * 100;
-		semimajorA = or *100 ;
+		System.out.println(name);
+		System.out.println(or);
+		semimajorA = or;
 		orbitalPeriod = op;
 		eccentricity = e;
 		discoveryDate = d;
 		discoveryMethod = m;
 		parentName = pn;
+		parentRadius = parR;
 		xpos = 0;
 		ypos = 0;
 		theta = 0;
 		position = new Point2D.Double(xpos, ypos);
 		
-		xLeft = 200;
-		yTop = 200;
+		calcDisRad();
+		//xLeft = 300;
+		//yTop = 300;
+	}
+	
+	public void calcDisRad(){
+		
+		if (semimajorA < 0.1) semimajorA  = semimajorA* 10000;
+		else if (semimajorA < 1) semimajorA  = semimajorA* 1000;
+		else if (semimajorA > 100) semimajorA  = semimajorA / 10;
 	}
 	
 public void calculateRad(){
@@ -58,8 +70,8 @@ public void calculateRad(){
 	public void movePlanet(){
 		
 		theta += Math.toRadians(orbitalVelocity);
-		xpos  = (orbitalRad *Math.cos(theta) + xLeft);
-		ypos = (orbitalRad *Math.sin(theta) + yTop);
+		xpos  = (orbitalRad *Math.cos(theta)); //+ xLeft);
+		ypos = (orbitalRad *Math.sin(theta))  ; //+ yTop);
 		position = new Point2D.Double(xpos, ypos);
 		//repaint();
 	}
@@ -81,6 +93,26 @@ public void calculateRad(){
 	public String getParent(){
 		return parentName;
 	}
+	
+	public double getStarScaleFactor(){
+		
+		return parentRadius;
+		
+	}
+	
+	public void setDisplayRadius(){
+		 
+		double disRad = orbitalRad;
+	}
+	
+	
+	
+	public int getParentRadius(){
+		
+		double interRadius = parentRadius *100;
+		int returnRadius = (int) interRadius;
+		
+		return returnRadius;}
 	
 	public int getDisDate(){return discoveryDate;}
 	public String getDisMeth(){return discoveryMethod;}

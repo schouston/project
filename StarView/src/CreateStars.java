@@ -5,7 +5,7 @@ import java.util.Scanner;
 //class to create star objects from input text file
 public class CreateStars {
 	
-	private final String INPUT_TEXT_FILE = "processed_upto_50mas.txt";
+	private final String INPUT_TEXT_FILE = "processed_upto_20mas.txt";
 	private int id;
 	private double mag;
 	private double ra;

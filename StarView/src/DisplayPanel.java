@@ -13,6 +13,7 @@ public class DisplayPanel extends JPanel{
 	private StarController controller;
 
 	private double width, height, xdis, ydis, xdisSearch, ydisSearch;
+	private double scale = 2;
 
 	private Star[] drawArray;
 
@@ -34,13 +35,14 @@ public class DisplayPanel extends JPanel{
 
 	public double getXdisplacement(){ return xdis;}
 	public double getYdisplacement(){return ydis;}
+	public double getScale(){return scale;}
 
 	// method to set (0,0) on display
 	public void setcoords(){
 
 		height = this.getHeight();
 		width = this.getWidth();
-		xdis = width/2;
+		xdis = (width/2);
 		ydis = (height/2);
 		xdisSearch = xdis;
 		ydisSearch = ydis;
@@ -131,12 +133,12 @@ public class DisplayPanel extends JPanel{
 			//g2.setTransform(tform);
 			//g2.translate(size.width/2, size.height/2);
 			//System.out.println("HERE IN DRAW");
-			Ellipse2D.Double point = new Ellipse2D.Double(star.getCartX() + xdis - (star.getCartZ()/2), star.getCartY() + ydis - (star.getCartZ()/2), star.getCartZ(), star.getCartZ());
+			Ellipse2D.Double point = new Ellipse2D.Double((star.getCartX() + xdis - (star.getCartZ()/2))*scale, (star.getCartY() + ydis - (star.getCartZ()/2))*scale, star.getCartZ(), star.getCartZ());
 			g2.setColor(star.getDisplayColor());
 			g2.fill(point);
 			
 			if (star.getCommonNameBool())
-				g2.drawString(star.getName(), (int) (star.getCartX() + xdis + 5), (int) (star.getCartY() + ydis + 5));
+				g2.drawString(star.getName(), (int) ((star.getCartX() + xdis + 5)*scale), (int) ((star.getCartY() + ydis + 5)*scale));
 			
 		}
 		

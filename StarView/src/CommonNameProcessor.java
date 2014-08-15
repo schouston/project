@@ -31,9 +31,9 @@ public class CommonNameProcessor {
 					System.out.println(tokens.length);
 					//System.out.println(tokens[76]);
 					String name1 = tokens[0].trim();
-					int id1 = Integer.parseInt(tokens[1]);
+					int id1 = Integer.parseInt(tokens[1].trim());
 					String name2 = tokens[2].trim();
-					int id2 = Integer.parseInt(tokens[3]);
+					int id2 = Integer.parseInt(tokens[3].trim());
 					CommonName nameObject1 = new CommonName(name1, id1);
 					CommonName nameObject2 = new CommonName(name2, id2);
 					nameManager.putName(nameObject1);

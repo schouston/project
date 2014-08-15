@@ -1,0 +1,68 @@
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+
+public class CommonNameProcessor {
+	
+	private final String IN_FILE = "common_names.txt";
+	//private final String OUT_FILE = "names_out.txt";
+	private CommonNameManager nameManager;
+	
+	public CommonNameProcessor(){
+		
+		//nameManager = new CommonNameManager();
+		
+	}
+	
+	public void processNameFile(){
+
+		try{
+			FileReader reader = new FileReader(IN_FILE);
+
+			//FileWriter out = new FileWriter(OUT_FILE);
+			Scanner  in = new Scanner(reader);
+
+			try{				
+				while (in.hasNextLine()){
+					String line = in.nextLine();
+					String [] tokens = line.split("[,]");
+					System.out.println(tokens.length);
+					//System.out.println(tokens[76]);
+					String name1 = tokens[0].trim();
+					int id1 = Integer.parseInt(tokens[1]);
+					String name2 = tokens[2].trim();
+					int id2 = Integer.parseInt(tokens[3]);
+					CommonName nameObject1 = new CommonName(name1, id1);
+					CommonName nameObject2 = new CommonName(name2, id2);
+					nameManager.putName(nameObject1);
+					nameManager.putName(nameObject2);
+					
+
+						//String output = String.format("%s, %f, %f, %f, %f, %f, %s", id, mag, ra, dec, par, colourInd, specType);
+						//out.write(output + '\n');
+						//out.write(id + ", " + mag + ", " + ra + ", " + dec + ", " + par + ", " + colourInd + ", " + specType + ", " + "\n");
+					}
+				//}
+			}
+			finally{
+				if((in)!=null)in.close();
+				//if((out)!= null)out.close();
+			}
+		}
+		catch (IOException e){
+			System.out.println("exception");
+		}
+	}
+	
+	public CommonNameManager getNameManager(){
+		return nameManager;
+	}
+	
+	public void test(){
+		
+		nameManager.setNames();
+	}
+
+}

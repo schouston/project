@@ -1,0 +1,24 @@
+import java.util.*;
+
+public class CommonName {
+	
+	private String name;
+	private String hippID;
+	
+	
+	public CommonName(String n, String id){
+		name = n;
+		hippID = id;
+		
+	}
+	
+	public String getName(){ return name;}
+	public String getID(){return hippID;}
+	
+	public void putNames(){
+		
+		//names.put(hippID, name);
+		
+	}
+
+}

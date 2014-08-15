@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.geom.Point2D;
 
 public class Star {
 
@@ -10,7 +11,8 @@ public class Star {
 	private int starViewID;									//unique starview id
 
 	private String name;									//
-	private int idNum;										//hipparcos id
+	private String idNum;										//hipparcos/tycho/gliese id
+	private int hippID;										// hipparcos id number used for common name processing
 	private double distance;								//distance from sun in pc
 	private double apMag;									//apparent (V-band) magnitude
 	private double abMag;									//absolute magnitude
@@ -33,6 +35,7 @@ public class Star {
 	
 	private String HDid;
 	private String HRid;
+	private String catalogueID;								//"H" for hipparcos, "T" for Tycho, "G" for Gliese
 	
 	private double displaySize;
 	
@@ -46,14 +49,27 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	}
 
 	//Hipparcos data constructor
-	public Star(int id, int sid, double vm, double r, double d, double p, double ci, String st, String cid, String hd, String hr){
-
+	public Star(String catID, String id, int sid, double vm, double r, double d, double p, double ci, String st, String cid, String hd, String hr){
+		
+		catalogueID = catID;
 		starViewID = sid;
 		//iDCounter ++;
 		idNum = id;
 		apMag = vm;
 		
-		if (r>180) ra = r - 360;
+		if (catalogueID.equals("H")) hippID = Integer.parseInt(id);
+		
+		if(catalogueID.equals("H") || catalogueID.equals("T")){
+			double changePerYear = 0.01388888;
+			double noYears = 9;
+			double totalChange = changePerYear * noYears;
+			
+			if (r>180) ra = r + totalChange - 360;
+			else
+			ra = r + totalChange;  
+		}
+		
+		else if (r>180) ra = r - 360;
 		else
 		ra = r;
 		
@@ -72,15 +88,18 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		setDisplaySize();
 		setTemp();
 		
-		//setHAProjection();
+		if (catalogueID.equals("T")) setStellarClass();
+		
+		setHAProjection();
 		//setCylinProj();
-		setLAEqualArea();
+		//setLAEqualArea();
 		//setOAProj();
 		//calcXCoord();
 		//calcYCoord();
 		//z();
 		//setCartesian();
 		//setMetProj();
+		//setGnomonicProj();
 		
 		calcZCoord();
 		setDisplayColor();
@@ -88,7 +107,8 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 
 	public int getSVid(){return starViewID;}
 	public String getName(){return name;}
-	public int getID(){return idNum;}
+	public String getID(){return idNum;}
+	public int getHippID(){return hippID;}
 	public double getDistance(){return distance;}
 	public double getApMag(){return apMag;}
 	public double getAbMag(){return abMag;}
@@ -109,6 +129,7 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	public String getHDid(){return HDid;}
 	public String getHRid(){return HRid;}
 	public double getDisplaySize(){return displaySize;}
+	public String getCatalogueID(){return catalogueID;}
 
 
 	public void setName(String s){
@@ -176,6 +197,28 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		else if (stellarClass.substring(0, 1).equals("M"))displayColor =(Color.red);
 		else if (stellarClass.substring(0, 1).equals("L"))displayColor =(Color.magenta);
 		else displayColor = (Color.yellow);
+		
+	}
+	
+	private void setStellarClass(){
+		
+		if (temp > 30000) stellarClass = "O";
+		else if (temp > 10000) stellarClass = "B";
+		else if (temp > 7500) stellarClass = "A";
+		else if (temp > 6000) stellarClass = "F";
+		else if (temp > 5000) stellarClass = "G";
+		else if (temp > 3500) stellarClass = "K";
+		else if (temp < 3500) stellarClass = "M";
+		else stellarClass = "DEFAULT";
+		
+		
+	}
+	
+	public void setMapProjection(Point2D.Double p){
+		
+		cartX = p.x;
+		cartY = p.y;
+		
 		
 	}
 	
@@ -269,24 +312,37 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 	
 	public void setOAProj(){
 		
-		//if (ra < 0) ra = ra + 360;
+	//	if (ra < 0) ra = ra + 360;
+		
 		SCALING_FACTOR = 380;
 		
 		double x = Math.cos(Math.toRadians(dec)) * Math.sin(Math.toRadians(ra));
 		double y = Math.sin(Math.toRadians(dec)) ;
 		if (ra < 0){
-			if (ra > -90) cartX = x * SCALING_FACTOR  + 800 - 400;			//ra between 0 and -90
+			if (ra > -90) cartX = x *  SCALING_FACTOR   - 400;			//ra between 0 and -90
 			else
-			cartX =  x * SCALING_FACTOR  - 400;							//ra between -90 and -180
+			cartX =  x * SCALING_FACTOR  + 400;							//ra between -90 and -180
 		}
 		
 		else {
 			if (ra < 90)											//ra between 0 and 90
-			cartX =  x * SCALING_FACTOR + 400;
-		else cartX = x * SCALING_FACTOR - 800 + 400;				// ra betwwn 90 and 180
+			cartX =  x * SCALING_FACTOR - 400;
+		else cartX = x * SCALING_FACTOR  + 400;				// ra betwwn 90 and 180
 		}
+		
+	
+		
+	/*	if (ra < 180){
+			if (ra <90)	 cartX = x * - SCALING_FACTOR  + 400; //if (ra <90)
+			else cartX =  x * SCALING_FACTOR + 400;
+		}
+		else {
+			if(ra < 270)
+			cartX =  x * -SCALING_FACTOR - 400;
+		cartX =  x * SCALING_FACTOR - 400;}*/
 		cartY =  y * - SCALING_FACTOR;
-	}
+		}
+	
 	
 	//Mercator
 	public void setMetProj(){
@@ -298,6 +354,19 @@ public void setCommonNameBoole(boolean b){hasCommonName = b;}
 		
 		cartX = ra * 4;//SCALING_FACTOR;
 		cartY = y2 / -2; //SCALING_FACTOR;
+	}
+	
+	// gnomonic
+	
+	public void setGnomonicProj(){
+		
+		if (ra < 0) ra = ra + 360;
+		double cosC = Math.cos(Math.toRadians(dec)) * Math.cos(Math.toRadians(ra));
+		double x = (Math.cos(Math.toRadians(dec)) * Math.sin(Math.toRadians(ra))) / cosC;
+		double y = (Math.sin(Math.toRadians(dec))) / cosC;
+		
+		cartX = x * 100;
+		cartY = y * - 100;
 	}
 
 

@@ -11,7 +11,7 @@ public class StarManager extends JComponent{
 
 	//class to store array of Star Objects
 
-	private final int SIZE = 11908;//936;  //array size
+	private final int SIZE = 12042;//936;  //array size
 	private Star[] starArray;	//array of star objects
 	public static int starArrayCounter = 0;	//counter for number of star objects entered
 	private int searchIndex = 0;

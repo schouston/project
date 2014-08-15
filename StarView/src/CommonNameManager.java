@@ -64,12 +64,16 @@ public class CommonNameManager {
 
 			Star star = starArray[i];
 
-			if (names.containsKey(star.getID())){
-				star.setName(names.get(star.getID()));
-				star.setCommonNameBoole(true);
+			if (star.getCatalogueID().equals("H")){
+
+				if (names.containsKey(star.getHippID())){
+					star.setName(names.get(star.getHippID()));
+					star.setCommonNameBoole(true);
+				}
+				else 
+					star.setName("HIP " + (star.getID()));
 			}
-			else
-				star.setName("HIP " + Integer.toString(star.getID()));
+			else star.setName("Tycho " + (star.getID()));
 		}
 	}
 

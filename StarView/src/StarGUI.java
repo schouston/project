@@ -101,10 +101,11 @@ public class StarGUI extends JFrame {
 	public void layoutCentre(){
 
 		mainDisplay.addMouseListener(controller);
+		mainDisplay.addMouseWheelListener(controller);
 		mainDisplay.setPreferredSize(new Dimension(1600, 1600));
 		
 		JScrollPane scroll = new JScrollPane(mainDisplay,  ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		
+		//scroll.addMouseWheelListener(controller);
 		this.add(scroll, BorderLayout.CENTER);
 		//this.getContentPane().add(scroll);
 		//this.add(mainDisplay, BorderLayout.CENTER);

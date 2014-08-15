@@ -1,0 +1,96 @@
+import java.io.*;
+import java.util.*;
+
+public class GlieseDataIn {
+	
+	private final String IN_FILE = "gliese_data";//"hippcat11000entries.txt"; //"upto_para_50mas.txt";//"hipp.txt";
+	private final String OUT_FILE = "gliese_data_proc.txt";//processed_upto_20mas.txt";
+	private final double MIN_PARALLAX = 13;
+	private String id;
+	private double mag;
+	private double ra;
+	private double dec;
+	private double par;
+	private double colourInd;
+	private String specType;
+	String ccdmID;
+
+	String HDid = "0";
+	String HRid = "0";
+	 String HIPid;
+	 String catalogueID = "T";
+	 
+	 public GlieseDataIn(){
+		 
+	 }
+	 
+	 public void readInFile(){
+			int counter = 0;
+
+			try{
+				FileReader reader = new FileReader(IN_FILE);
+
+				FileWriter out = new FileWriter(OUT_FILE);
+				Scanner  in = new Scanner(reader);
+
+				try{				
+					while (in.hasNextLine()){
+						String line = in.nextLine();
+						String [] tokens = line.split("[|]+");
+						System.out.println("token length: " +tokens.length);
+						//System.out.println(tokens[76]);
+						System.out.println(" before if " + tokens[11]);
+						if (tokens[31].trim().equals("")){
+
+						if (Double.parseDouble(tokens[11]) > MIN_PARALLAX){
+							System.out.println("here");
+							id = (tokens[1].trim());
+							}
+							mag = Double.parseDouble(tokens[5]);
+							ra = Double.parseDouble(tokens[8]);
+							dec = Double.parseDouble(tokens[9]);
+							par = Double.parseDouble(tokens[11]);
+							//double dis = Double.parseDouble(tokens[6]);
+							//System.out.println(tokens[37]);
+							if (tokens[37].trim().equals(""))colourInd = 0;
+							else
+							colourInd = Double.parseDouble(tokens[37]);
+							/*if (tokens[76].trim().equals(""))specType = "DEFAULT";
+							else
+								specType = tokens[76].trim();*/
+							specType = "DEFAULT";
+							if (tokens[51].trim().equals(""))ccdmID = "0";
+							//else if (tokens[58].trim().equals("1"))ccdmID = "0";//unresolved system treated as one object
+							else
+							ccdmID = tokens[51];
+							
+							if(!tokens[53].trim().equals("")) HDid = tokens[53];
+							//Star test = new Star(id, ra, dec, mag, dis);
+							//System.out.println("hi" + dec);
+
+							//FileWriter out = new FileWriter("processed_data.text");
+							
+
+							String output = String.format("%s, %f, %f, %f, %f, %f, %s,%s,%s,%s,%s,", id, mag, ra, dec, par, colourInd, specType, ccdmID, HDid, HRid, catalogueID);
+							out.write(output + '\n');
+							//out.write(id + ", " + mag + ", " + ra + ", " + dec + ", " + par + ", " + colourInd + ", " + specType + ", " + "\n");
+							System.out.println(counter);
+							counter ++;
+						
+						HDid = "0";
+						HRid= "0";
+						}
+					}
+				}
+				finally{
+					if((in)!=null)in.close();
+					if((out)!= null)out.close();
+				}
+			}
+			catch (IOException e){
+				System.out.println("exception");
+			}
+			
+			
+		}
+}

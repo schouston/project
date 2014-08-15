@@ -7,8 +7,11 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		HippDataIn in = new HippDataIn();
-		in.readInCrossRefFile();
+		//HippDataIn in = new HippDataIn();
+	//	in.readInCrossRefFile();
+	//	in.readInFile();
+		
+		TychoDataIn in = new TychoDataIn();
 		in.readInFile();
 		
 		//ExoDataIn in = new ExoDataIn();

@@ -5,8 +5,8 @@ import java.util.Scanner;
 //class to create star objects from input text file
 public class CreateStars {
 	
-	private final String INPUT_TEXT_FILE = "processed_upto_20mas.txt";
-	private int id;
+	private final String INPUT_TEXT_FILE = "H_and_T_test.txt";//"processed_upto_20mas.txt";
+	private String id;
 	private double mag;
 	private double ra;
 	private double dec;
@@ -16,6 +16,7 @@ public class CreateStars {
 	private String ccdmID = "NA";
 	private String HDid;
 	private String HRid;
+	private String catalogueID;
 	//private static int idcounter = 0;
 	private StarManager manager;
 	private CommonNameManager nameManager;
@@ -37,7 +38,7 @@ public class CreateStars {
 				while (in.hasNextLine()){
 					String line = in.nextLine();
 					String [] tokens = line.split("[,]+");
-					id = Integer.parseInt(tokens[0]);
+					id = (tokens[0].trim());
 					mag = Double.parseDouble(tokens[1]);
 					ra = Double.parseDouble(tokens[2]);
 					dec = Double.parseDouble(tokens[3]);
@@ -51,8 +52,9 @@ public class CreateStars {
 					HDid = tokens[8];
 					System.out.println ( tokens[8]);
 					HRid = tokens[9];
+					catalogueID = tokens[10];
 					
-					Star newStar = new Star(id, manager.getStarViewID(), mag, ra, dec, par, colourInd, specType, ccdmID, HDid, HRid);
+					Star newStar = new Star(catalogueID, id, manager.getStarViewID(), mag, ra, dec, par, colourInd, specType, ccdmID, HDid, HRid);
 					//newStar.setName();
 					manager.addStar(newStar);
 					count ++;

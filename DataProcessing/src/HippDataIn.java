@@ -15,6 +15,7 @@ public class HippDataIn {
 	private double colourInd;
 	private String specType;
 	String ccdmID;
+	String catalogueID = "H";
 
 	String HDid = "0";
 	String HRid = "0";
@@ -84,8 +85,9 @@ public class HippDataIn {
 						//System.out.println("hi" + dec);
 
 						//FileWriter out = new FileWriter("processed_data.text");
+						
 
-						String output = String.format("%s, %f, %f, %f, %f, %f, %s,%s,%s,%s,", id, mag, ra, dec, par, colourInd, specType, ccdmID, HDid, HRid);
+						String output = String.format("%s, %f, %f, %f, %f, %f, %s,%s,%s,%s,%s,", id, mag, ra, dec, par, colourInd, specType, ccdmID, HDid, HRid, catalogueID);
 						out.write(output + '\n');
 						//out.write(id + ", " + mag + ", " + ra + ", " + dec + ", " + par + ", " + colourInd + ", " + specType + ", " + "\n");
 						System.out.println(counter);

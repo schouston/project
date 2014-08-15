@@ -5,7 +5,7 @@ import java.awt.geom.Point2D.Double;
 import javax.swing.JOptionPane;
 
 //class to listen for events. also creates gui object
-public class StarController implements MouseListener, ActionListener{
+public class StarController implements MouseListener, ActionListener, MouseWheelListener{
 
 	private final int MAX_DIST = 50;				//Maximum distance for filter
 	private final int MAX_MAG = 13;					//Maximum magnitude for filter
@@ -41,6 +41,12 @@ public class StarController implements MouseListener, ActionListener{
 	}
 
 	public Star getSelectedStar(){return selectedStar;}
+	
+	public void mouseWheelMoved(MouseWheelEvent e){
+		int notches = e.getWheelRotation();
+		
+	//	if (notches < 0)
+	}
 
 	public void mousePressed(MouseEvent e){
 
@@ -55,8 +61,8 @@ public class StarController implements MouseListener, ActionListener{
 		Star [] stars = manager.getStarArray();
 
 		for (int i = 0; i < stars.length; i++){	
-			double x = stars[i].getCartX() + ( display.getXdisplacement());
-			double y = stars[i].getCartY() + (display.getYdisplacement());
+			double x = stars[i].getCartX() + ( display.getXdisplacement())*display.getScale();
+			double y = stars[i].getCartY() + (display.getYdisplacement())* display.getScale();
 
 			if ( e.getX() >= x-2  && e.getX() <= x+2 && e.getY() >= y-2 && e.getY() <= y+2 ){
 				//if (e.getX() == stars[i].getCartX() && e.getY() == stars[i].getCartY()){
@@ -190,12 +196,16 @@ public class StarController implements MouseListener, ActionListener{
 
 
 			Star [] stars = manager.getStarArray();
+			
 
 			for (int i = 0; i < stars.length; i++){	
-				if(selectedString.equals("Hammer-Aitoff"))stars[i].setHAProjection();
-				else if (selectedString.equals("Mercator"))stars[i].setMetProj();
-				else if (selectedString.equals("Cylindrical Equal Area"))stars[i].setCylinProj();
-				else if (selectedString.equals("Orthographic"))stars[i].setOAProj();
+				Star star = stars[i];
+				
+				MapProjection proj = new MapProjection(star.getRA(), star.getDec());
+				if(selectedString.equals("Hammer-Aitoff")) star.setMapProjection(proj.setHAProjection()); //stars[i].setHAProjection();
+				else if (selectedString.equals("Mercator"))star.setMapProjection(proj.setMetProj());
+				else if (selectedString.equals("Cylindrical Equal Area"))star.setMapProjection(proj.setCylinProj());
+				else if (selectedString.equals("Orthographic"))star.setMapProjection(proj.setOAProj());
 				display.repaint();
 			}
 
